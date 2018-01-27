@@ -17,6 +17,5 @@ namespace New_CUI
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new NCUIForm());
         }
-        //test
     }
 }
