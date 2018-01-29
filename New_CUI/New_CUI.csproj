@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataStructure\DS.cs" />
+    <Compile Include="FileManager\ConfigRead.cs" />
     <Compile Include="socket\ClientSocket.cs" />
     <Compile Include="Interface\IErrorLog.cs" />
     <Compile Include="Library\ErrorReport.cs" />

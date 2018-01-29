@@ -10,6 +10,7 @@ using socket;
 using DataStructure;
 using System.IO;
 using System.Net;
+using FileManager;
 using System.Threading;
 using System.Diagnostics;
 using System.Windows.Forms;
@@ -19,32 +20,62 @@ namespace New_CUI
 {
     public partial class NCUIForm : Form
     {
+        private DataStructure.DS _ds = null;
         private ClientSocket client = new ClientSocket();
         private StatusBarPanel pnlStatus = new StatusBarPanel();
         private string ftpfileName = @"WinSCP.exe";
-        private int i = 0;
+        private string logpath = string.Empty;
+        private string logextension = ".log";
+        private int configcheck =-1;
+        private bool logfileopen = false;
+        private StreamWriter sw = null;
 
         public NCUIForm()
         {
+            _ds = DS.Instance;
             InitializeComponent();
-            Initialized();
             SetLogHandler();
             DispStandbyMsg();
+            Initialized();
         }
         private void Initialized()
         {
+            //Control
             ipAddressControl1.Focus();
             button_Discon.Enabled = false;
             button_INIT.Enabled = false;
             button_START.Enabled = false;
             button_STOP.Enabled = false;
             button_Send.Enabled = false;
+            button_1.Enabled = false;
+            button_2.Enabled = false;
+            button_3.Enabled = false;
+            button_4.Enabled = false;
+            button_5.Enabled = false;
+
+            //Read and check Config file
+            ConfigRead cf = new ConfigRead();
+            cf.FilePath = Directory.GetCurrentDirectory();
+            configcheck = cf.ConfigStart();
+            if (configcheck == 0)
+            {
+                ipAddressControl1.Text = _ds.IPAddr;
+                textBox_Port.Text = _ds.Port;
+                listBox_cmd.Items.Add("자주 사용하는 CMD");
+                foreach (var data in _ds._Cmd)
+                    listBox_cmd.Items.Add(data.Key + " " + data.Value);
+                Handler.LogMsg.AddNShow("Config 파일을 성공적으로 읽었습니다.");
+            }
+            else if (configcheck == -1) Handler.LogMsg.AddNShow("Config 경로가 제대로 설정되지 않았습니다.");
+            else if (configcheck == -2) Handler.LogMsg.AddNShow("Config 경로에 파일이 없습니다.");
+            else Handler.LogMsg.AddNShow("Config Read 중 Error 발생");
         }
         private void DispLog(string msg)
         {
-            if (listBoxLog.Items.Count >= 1000 && listBoxLog.Items[0] != null)
+            if (listBoxLog.Items.Count >= 500 && listBoxLog.Items[0] != null)
                 listBoxLog.Items.RemoveAt(0);
 
+            if (logfileopen) sw.WriteLine(msg);
             listBoxLog.TopIndex = listBoxLog.Items.Add(msg);
         }
         private void SetLogHandler()
@@ -59,24 +90,44 @@ namespace New_CUI
 
         private void button_Send_Click(object sender, EventArgs e)
         {
-            if (!chkTest.Checked)
+            string cmd = string.Empty;
+            int value = 0;
+            try
             {
-                try
+                if (configcheck == 0 && int.TryParse(textBox_cmd.Text, out value))
                 {
-                    client.SendMessage(textBox_cmd.Text);
+                    switch (value)
+                    {
+                        case 1:
+                            _ds._Cmd.TryGetValue(1, out cmd);
+                            client.SendMessage(cmd);
+                            break;
+                        case 2:
+                            _ds._Cmd.TryGetValue(2, out cmd);
+                            client.SendMessage(cmd);
+                            break;
+                        case 3:
+                            _ds._Cmd.TryGetValue(3, out cmd);
+                            client.SendMessage(cmd);
+                            break;
+                        case 4:
+                            _ds._Cmd.TryGetValue(4, out cmd);
+                            client.SendMessage(cmd);
+                            break;
+                        case 5:
+                            _ds._Cmd.TryGetValue(5, out cmd);
+                            client.SendMessage(cmd);
+                            break;
+                        default:
+                            Handler.LogMsg.AddNShow("잘못된 CMD 입력: " + value.ToString());
+                            break;
+                    }
                 }
-                catch (Exception ex)
-                {
-                    Handler.LogMsg.AddNShow("Send Error : " + ex.Message);
-                }
+                else client.SendMessage(textBox_cmd.Text);   
             }
-            else
+            catch (Exception ex)
             {
-                while (true)
-                {
-                    Handler.LogMsg.AddNShow(i.ToString() + "Command show Test" + listBoxLog.Items.Count.ToString());
-                    i++;
-                }
+                Handler.LogMsg.AddNShow("Send Error : " + ex.Message);
             }
         }
 
@@ -97,10 +148,21 @@ namespace New_CUI
                     button_Discon.Enabled = true;
                     button_Send.Enabled = true;
                     button_INIT.Enabled = true;
+                    button_1.Enabled = true;
+                    button_2.Enabled = true;
+                    button_3.Enabled = true;
+                    button_4.Enabled = true;
+                    button_5.Enabled = true;
                     toolStripStatusLabel.Text = "IP 주소 : " + ipAddressControl1.Text +
                         " 포트 번호 : " + textBox_Port.Text + "로 연결 완료";
                 }
             }
+        }
+
+        private string WriteDateTime()
+        {
+            string revalue = DateTime.Now.ToString("yyMMdd_HHmmss");
+            return revalue;
         }
 
         private void button_START_Click(object sender, EventArgs e)
@@ -109,6 +171,12 @@ namespace New_CUI
             IsSuccess = client.SendMessage(Command.cmd_Start);
             if (IsSuccess)
             {
+                if (configcheck == 0)
+                {
+                    logpath = Path.Combine(_ds.DIR, WriteDateTime() + logextension);
+                    sw = new StreamWriter(logpath, true, System.Text.UTF8Encoding.UTF8);
+                    logfileopen = true;
+                }
                 button_START.Enabled = false;
                 button_STOP.Enabled = true;
                 toolStripStatusLabel.Text = "TEM START 전송";
@@ -122,6 +190,7 @@ namespace New_CUI
             IsSuccess = client.SendMessage(Command.cmd_Stop);
             if (IsSuccess)
             {
+                sw.Close();
                 button_START.Enabled = true;
                 button_STOP.Enabled = false;
                 toolStripStatusLabel.Text = "TEM STOP 전송";
@@ -199,6 +268,11 @@ namespace New_CUI
                 button_INIT.Enabled = false;
                 button_START.Enabled = false;
                 button_STOP.Enabled = false;
+                button_1.Enabled = false;
+                button_2.Enabled = false;
+                button_3.Enabled = false;
+                button_4.Enabled = false;
+                button_5.Enabled = false;
                 toolStripStatusLabel.Text = "TEM Disconnect";
             }
         }
@@ -209,14 +283,109 @@ namespace New_CUI
             else button_Discon.BackColor = SystemColors.InactiveCaption;
         }
 
-        private void NCUIForm_Load(object sender, EventArgs e)
+        private void button_1_EnabledChanged(object sender, EventArgs e)
         {
-
+            if (button_1.Enabled) button_1.BackColor = Color.MediumAquamarine;
+            else button_1.BackColor = SystemColors.InactiveCaption;
         }
 
-        private void label3_Click(object sender, EventArgs e)
+        private void button_2_EnabledChanged(object sender, EventArgs e)
         {
+            if (button_2.Enabled) button_2.BackColor = Color.MediumAquamarine;
+            else button_2.BackColor = SystemColors.InactiveCaption;
+        }
 
+        private void button_3_EnabledChanged(object sender, EventArgs e)
+        {
+            if (button_3.Enabled) button_3.BackColor = Color.MediumAquamarine;
+            else button_3.BackColor = SystemColors.InactiveCaption;
+        }
+
+        private void button_4_EnabledChanged(object sender, EventArgs e)
+        {
+            if (button_4.Enabled) button_4.BackColor = Color.MediumAquamarine;
+            else button_4.BackColor = SystemColors.InactiveCaption;
+        }
+
+        private void button_5_EnabledChanged(object sender, EventArgs e)
+        {
+            if (button_5.Enabled) button_5.BackColor = Color.MediumAquamarine;
+            else button_5.BackColor = SystemColors.InactiveCaption;
+        }
+
+        private void button_1_Click(object sender, EventArgs e)
+        {
+            bool IsSuccess = false;
+            string cmd = string.Empty;
+            try
+            {
+                _ds._Cmd.TryGetValue(1, out cmd);
+                IsSuccess = client.SendMessage(cmd);
+            }
+            catch (Exception ex)
+            {
+                Handler.LogMsg.AddNShow("Send Error : " + ex.Message);
+            }
+        }
+
+        private void button_2_Click(object sender, EventArgs e)
+        {
+            bool IsSuccess = false;
+            string cmd = string.Empty;
+            try
+            {
+                _ds._Cmd.TryGetValue(2, out cmd);
+                IsSuccess = client.SendMessage(cmd);
+            }
+            catch (Exception ex)
+            {
+                Handler.LogMsg.AddNShow("Send Error : " + ex.Message);
+            }
+        }
+
+        private void button_3_Click(object sender, EventArgs e)
+        {
+            bool IsSuccess = false;
+            string cmd = string.Empty;
+            try
+            {
+                _ds._Cmd.TryGetValue(3, out cmd);
+                IsSuccess = client.SendMessage(cmd);
+            }
+            catch (Exception ex)
+            {
+                Handler.LogMsg.AddNShow("Send Error : " + ex.Message);
+            }
+        }
+
+        private void button_4_Click(object sender, EventArgs e)
+        {
+            bool IsSuccess = false;
+            string cmd = string.Empty;
+            try
+            {
+                _ds._Cmd.TryGetValue(4, out cmd);
+                IsSuccess = client.SendMessage(cmd);
+            }
+            catch (Exception ex)
+            {
+                Handler.LogMsg.AddNShow("Send Error : " + ex.Message);
+            }
+        }
+
+        private void button_5_Click(object sender, EventArgs e)
+        {
+            bool IsSuccess = false;
+            string cmd = string.Empty;
+            try
+            {
+                _ds._Cmd.TryGetValue(5, out cmd);
+                IsSuccess = client.SendMessage(cmd);
+            }
+            catch (Exception ex)
+            {
+                Handler.LogMsg.AddNShow("Send Error : " + ex.Message);
+            }
         }
     }
 }
