@@ -94,34 +94,11 @@ namespace New_CUI
             int value = 0;
             try
             {
-                if (configcheck == 0 && int.TryParse(textBox_cmd.Text, out value))
+                int.TryParse(textBox_cmd.Text, out value);
+                if (configcheck == 0 && _ds._Cmd.ContainsKey(value))
                 {
-                    switch (value)
-                    {
-                        case 1:
-                            _ds._Cmd.TryGetValue(1, out cmd);
-                            client.SendMessage(cmd);
-                            break;
-                        case 2:
-                            _ds._Cmd.TryGetValue(2, out cmd);
-                            client.SendMessage(cmd);
-                            break;
-                        case 3:
-                            _ds._Cmd.TryGetValue(3, out cmd);
-                            client.SendMessage(cmd);
-                            break;
-                        case 4:
-                            _ds._Cmd.TryGetValue(4, out cmd);
-                            client.SendMessage(cmd);
-                            break;
-                        case 5:
-                            _ds._Cmd.TryGetValue(5, out cmd);
-                            client.SendMessage(cmd);
-                            break;
-                        default:
-                            Handler.LogMsg.AddNShow("잘못된 CMD 입력: " + value.ToString());
-                            break;
-                    }
+                    _ds._Cmd.TryGetValue(value, out cmd);
+                    client.SendMessage(cmd);
                 }
                 else client.SendMessage(textBox_cmd.Text);   
             }
