@@ -102,9 +102,9 @@
             this.button_Connect.BackColor = System.Drawing.Color.MediumAquamarine;
             this.button_Connect.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_Connect.Font = new System.Drawing.Font("맑은 고딕", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.button_Connect.Location = new System.Drawing.Point(10, 80);
+            this.button_Connect.Location = new System.Drawing.Point(8, 81);
             this.button_Connect.Name = "button_Connect";
-            this.button_Connect.Size = new System.Drawing.Size(120, 65);
+            this.button_Connect.Size = new System.Drawing.Size(130, 65);
             this.button_Connect.TabIndex = 4;
             this.button_Connect.Text = "Connect";
             this.button_Connect.UseVisualStyleBackColor = false;
@@ -116,9 +116,9 @@
             this.button_START.BackColor = System.Drawing.Color.MediumAquamarine;
             this.button_START.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_START.Font = new System.Drawing.Font("맑은 고딕", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.button_START.Location = new System.Drawing.Point(146, 153);
+            this.button_START.Location = new System.Drawing.Point(142, 153);
             this.button_START.Name = "button_START";
-            this.button_START.Size = new System.Drawing.Size(120, 65);
+            this.button_START.Size = new System.Drawing.Size(130, 65);
             this.button_START.TabIndex = 5;
             this.button_START.Text = "START";
             this.button_START.UseVisualStyleBackColor = false;
@@ -131,9 +131,9 @@
             this.button_STOP.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
             this.button_STOP.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_STOP.Font = new System.Drawing.Font("맑은 고딕", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.button_STOP.Location = new System.Drawing.Point(281, 153);
+            this.button_STOP.Location = new System.Drawing.Point(276, 153);
             this.button_STOP.Name = "button_STOP";
-            this.button_STOP.Size = new System.Drawing.Size(120, 65);
+            this.button_STOP.Size = new System.Drawing.Size(130, 65);
             this.button_STOP.TabIndex = 6;
             this.button_STOP.Text = "STOP";
             this.button_STOP.UseVisualStyleBackColor = false;
@@ -178,14 +178,12 @@
             // 
             // chkTest
             // 
-            this.chkTest.Enabled = false;
             this.chkTest.Location = new System.Drawing.Point(9, 11);
             this.chkTest.Name = "chkTest";
             this.chkTest.Size = new System.Drawing.Size(49, 16);
             this.chkTest.TabIndex = 11;
             this.chkTest.Text = "Test";
             this.chkTest.UseVisualStyleBackColor = true;
-            this.chkTest.Visible = false;
             // 
             // textBox_cmd
             // 
@@ -222,9 +220,9 @@
             this.button_Discon.BackColor = System.Drawing.Color.MediumAquamarine;
             this.button_Discon.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_Discon.Font = new System.Drawing.Font("맑은 고딕", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.button_Discon.Location = new System.Drawing.Point(146, 80);
+            this.button_Discon.Location = new System.Drawing.Point(142, 81);
             this.button_Discon.Name = "button_Discon";
-            this.button_Discon.Size = new System.Drawing.Size(120, 65);
+            this.button_Discon.Size = new System.Drawing.Size(130, 65);
             this.button_Discon.TabIndex = 18;
             this.button_Discon.Text = "Discon";
             this.button_Discon.UseVisualStyleBackColor = false;
@@ -252,9 +250,9 @@
             this.button_INIT.BackColor = System.Drawing.Color.MediumAquamarine;
             this.button_INIT.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_INIT.Font = new System.Drawing.Font("맑은 고딕", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.button_INIT.Location = new System.Drawing.Point(281, 80);
+            this.button_INIT.Location = new System.Drawing.Point(276, 81);
             this.button_INIT.Name = "button_INIT";
-            this.button_INIT.Size = new System.Drawing.Size(120, 65);
+            this.button_INIT.Size = new System.Drawing.Size(130, 65);
             this.button_INIT.TabIndex = 16;
             this.button_INIT.Text = "INIT";
             this.button_INIT.UseVisualStyleBackColor = false;
@@ -266,9 +264,9 @@
             this.button1.BackColor = System.Drawing.Color.MediumAquamarine;
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button1.Font = new System.Drawing.Font("맑은 고딕", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.button1.Location = new System.Drawing.Point(10, 153);
+            this.button1.Location = new System.Drawing.Point(8, 153);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(120, 65);
+            this.button1.Size = new System.Drawing.Size(130, 65);
             this.button1.TabIndex = 15;
             this.button1.Text = "FTP";
             this.button1.UseVisualStyleBackColor = false;

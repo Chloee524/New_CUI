@@ -64,11 +64,11 @@ namespace New_CUI
                 listBox_cmd.Items.Add("자주 사용하는 CMD");
                 foreach (var data in _ds._Cmd)
                     listBox_cmd.Items.Add(data.Key + " " + data.Value);
-                Handler.LogMsg.AddNShow("Config 파일을 성공적으로 읽었습니다.");
+                Handler.LogMsg.AddNShow("[CUI] Config 파일을 성공적으로 읽었습니다.");
             }
-            else if (configcheck == -1) Handler.LogMsg.AddNShow("Config 경로가 제대로 설정되지 않았습니다.");
-            else if (configcheck == -2) Handler.LogMsg.AddNShow("Config 경로에 파일이 없습니다.");
-            else Handler.LogMsg.AddNShow("Config Read 중 Error 발생");
+            else if (configcheck == -1) Handler.LogMsg.AddNShow("[CUI] Config 경로가 제대로 설정되지 않았습니다.");
+            else if (configcheck == -2) Handler.LogMsg.AddNShow("[CUI] Config 경로에 파일이 없습니다.");
+            else Handler.LogMsg.AddNShow("[CUI] Config Read 중 Error 발생");
         }
         private void DispLog(string msg)
         {
@@ -84,7 +84,7 @@ namespace New_CUI
         }
         private void DispStandbyMsg()
         {
-            Handler.LogMsg.AddNShow("프로그램 준비가 완료되었습니다.");
+            Handler.LogMsg.AddNShow("[CUI] 프로그램 준비가 완료되었습니다.");
             toolStripStatusLabel.Text = "Ready";
         }
 
@@ -104,7 +104,7 @@ namespace New_CUI
             }
             catch (Exception ex)
             {
-                Handler.LogMsg.AddNShow("Send Error : " + ex.Message);
+                Handler.LogMsg.AddNShow("[CUI] Send Error : " + ex.Message);
             }
         }
 
@@ -301,7 +301,7 @@ namespace New_CUI
             }
             catch (Exception ex)
             {
-                Handler.LogMsg.AddNShow("Send Error : " + ex.Message);
+                Handler.LogMsg.AddNShow("[CUI] Send Error : " + ex.Message);
             }
         }
 
@@ -316,7 +316,7 @@ namespace New_CUI
             }
             catch (Exception ex)
             {
-                Handler.LogMsg.AddNShow("Send Error : " + ex.Message);
+                Handler.LogMsg.AddNShow("[CUI] Send Error : " + ex.Message);
             }
         }
 
@@ -331,7 +331,7 @@ namespace New_CUI
             }
             catch (Exception ex)
             {
-                Handler.LogMsg.AddNShow("Send Error : " + ex.Message);
+                Handler.LogMsg.AddNShow("[CUI] Send Error : " + ex.Message);
             }
         }
 
@@ -346,7 +346,7 @@ namespace New_CUI
             }
             catch (Exception ex)
             {
-                Handler.LogMsg.AddNShow("Send Error : " + ex.Message);
+                Handler.LogMsg.AddNShow("[CUI] Send Error : " + ex.Message);
             }
         }
 
@@ -361,7 +361,7 @@ namespace New_CUI
             }
             catch (Exception ex)
             {
-                Handler.LogMsg.AddNShow("Send Error : " + ex.Message);
+                Handler.LogMsg.AddNShow("[CUI] Send Error : " + ex.Message);
             }
         }
     }

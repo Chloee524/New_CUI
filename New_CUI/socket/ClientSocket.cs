@@ -53,13 +53,13 @@ namespace socket
                     // 비동기적으로 들어오는 자료를 수신하기 위해 BeginReceive 메서드 사용!
                     client.BeginReceive(ao.buffer, 0, ao.buffer.Length, SocketFlags.None, receiverHandler, ao);
 
-                    Handler.LogMsg.AddNShow("Socket Connection Success ");
+                    Handler.LogMsg.AddNShow("[CUI] Socket Connection Success ");
                 }
 
             }
             catch (Exception e)
             {
-                Handler.LogMsg.AddNShow("Socket Connection Error: " + e.Message);
+                Handler.LogMsg.AddNShow("[CUI] Connection Error: " + e.Message);
             }
 
             return IsConnected;
@@ -106,7 +106,7 @@ namespace socket
                     // 여기도 마찬가지로 보낸 바이트 수 만큼 배열 선언 후 복사한다.
                     Byte[] msgByte = new Byte[sentBytes];
                     Array.Copy(ao.buffer, msgByte, sentBytes);
-                    Handler.LogMsg.AddNShow("Send Message :" + System.Text.Encoding.UTF8.GetString(msgByte));
+                    Handler.LogMsg.AddNShow("[Send] " + System.Text.Encoding.UTF8.GetString(msgByte));
 
                     IsSent = true;
                 }
@@ -114,7 +114,7 @@ namespace socket
             }
             catch (Exception e)
             {
-                Handler.LogMsg.AddNShow("Socket Send Error: " + e.Message);
+                Handler.LogMsg.AddNShow("[CUI] Send Error: " + e.Message);
             }
 
             return IsSent;
@@ -151,7 +151,7 @@ namespace socket
             catch (Exception ex)
             {
                 // 예외가 발생하면 예외 정보 출력 후 함수를 종료한다.
-                Handler.LogMsg.AddNShow("Receive Error : " + ex.Message);
+                Handler.LogMsg.AddNShow("[CUI] Receive Error : " + ex.Message);
                 return IsReceived;
             }
             return IsReceived;
@@ -185,7 +185,7 @@ namespace socket
             }
             catch (Exception ex)
             {
-                Handler.LogMsg.AddNShow("Socket Send Error: " + ex.Message);
+                Handler.LogMsg.AddNShow("[CUI] Send Error: " + ex.Message);
             }
             return IsSent;
         }
@@ -199,18 +199,18 @@ namespace socket
                 if (client != null)
                 {
                     client.Close();
-                    Handler.LogMsg.AddNShow("Socket Disconnection");
+                    Handler.LogMsg.AddNShow("[CUI] Socket Disconnection");
                     IsDisconnected = true;
                 }
                 else
                 {
-                    Handler.LogMsg.AddNShow("There is no Socket to disconnect");
+                    Handler.LogMsg.AddNShow("[CUI] There is no Socket to disconnect");
                     
                 }
             }
             catch (Exception e)
             {
-                Handler.LogMsg.AddNShow("Socket Disconnection Error: " + e.Message);
+                Handler.LogMsg.AddNShow("[CUI] Disconnection Error: " + e.Message);
             }
             return IsDisconnected;
         }
@@ -252,7 +252,7 @@ namespace socket
             catch (Exception ex)
             {
                 // 예외가 발생하면 예외 정보 출력 후 함수를 종료한다.
-                Handler.LogMsg.AddNShow("Rcv Error: " + ex.Message);
+                Handler.LogMsg.AddNShow("[CUI] Rcv Error: " + ex.Message);
                 return;
             }
         }
@@ -276,13 +276,13 @@ namespace socket
                     // 여기도 마찬가지로 보낸 바이트 수 만큼 배열 선언 후 복사한다.
                     Byte[] msgByte = new Byte[sentBytes];
                     Array.Copy(co.buffer, msgByte, sentBytes);
-                    Handler.LogMsg.AddNShow("Send: " + System.Text.Encoding.UTF8.GetString(msgByte));
+                    Handler.LogMsg.AddNShow("[Send] " + System.Text.Encoding.UTF8.GetString(msgByte));
                 }
             }
             catch (Exception ex)
             {
                 // 예외가 발생하면 예외 정보 출력 후 함수를 종료한다.
-                Handler.LogMsg.AddNShow("Send Error: " + ex.Message);
+                Handler.LogMsg.AddNShow("[CUI] Send Error: " + ex.Message);
                 return;
             }
 
