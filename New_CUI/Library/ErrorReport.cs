@@ -90,7 +90,6 @@ namespace Library
 
         protected ErrorReport()
         {
-
         }
 
         #endregion  // CONSTRUCTOR
@@ -127,11 +126,12 @@ namespace Library
 #if false // 스레드 작업시
                     mainForm.Invoke(new MethodInvoker(delegate()
                     {
-                        mainForm.LogTextBox.AppendText(string.Format("> {0} -- [{1}]", msg.message, ConvTimeToString(msg.time)));
+                        mainForm.AppendText(string.Format("> {0} -- [{1}]", msg.message, ConvTimeToString(msg.time)));
                     }
                     ));
 #else
-                    string log = string.Format("[{0}]> {1}"/*{2}"*/, ConvTimeToString(msg.time), msg.message /*, Environment.NewLine*/);
+                    string log = string.Empty;
+                    log = string.Format("[{0}]> {1} {2}", ConvTimeToString(msg.time), msg.message, Environment.NewLine);
                     _display(log);
 
 #endif

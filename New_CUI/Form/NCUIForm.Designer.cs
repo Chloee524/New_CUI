@@ -178,12 +178,14 @@
             // 
             // chkTest
             // 
+            this.chkTest.Enabled = false;
             this.chkTest.Location = new System.Drawing.Point(9, 11);
             this.chkTest.Name = "chkTest";
             this.chkTest.Size = new System.Drawing.Size(49, 16);
             this.chkTest.TabIndex = 11;
             this.chkTest.Text = "Test";
             this.chkTest.UseVisualStyleBackColor = true;
+            this.chkTest.Visible = false;
             // 
             // textBox_cmd
             // 
@@ -316,12 +318,14 @@
             // 
             // listBoxLog
             // 
+            this.listBoxLog.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.listBoxLog.Font = new System.Drawing.Font("맑은 고딕", 11.25F);
             this.listBoxLog.FormattingEnabled = true;
             this.listBoxLog.ItemHeight = 20;
             this.listBoxLog.Location = new System.Drawing.Point(0, 3);
             this.listBoxLog.Name = "listBoxLog";
             this.listBoxLog.ScrollAlwaysVisible = true;
+            this.listBoxLog.SelectionMode = System.Windows.Forms.SelectionMode.None;
             this.listBoxLog.Size = new System.Drawing.Size(559, 604);
             this.listBoxLog.TabIndex = 15;
             // 

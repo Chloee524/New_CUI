@@ -75,7 +75,7 @@ namespace New_CUI
             if (listBoxLog.Items.Count >= 500 && listBoxLog.Items[0] != null)
                 listBoxLog.Items.RemoveAt(0);
 
-            if (logfileopen) sw.WriteLine(msg);
+            if (logfileopen && sw != null) sw.WriteLine(msg);
             listBoxLog.TopIndex = listBoxLog.Items.Add(msg);
         }
         private void SetLogHandler()
@@ -94,13 +94,15 @@ namespace New_CUI
             int value = 0;
             try
             {
+                if(chkTest.Checked) Handler.LogMsg.AddNShow("가나다라마바사아자차카타파하가나다라마바사아자차카타파하");
                 int.TryParse(textBox_cmd.Text, out value);
                 if (configcheck == 0 && _ds._Cmd.ContainsKey(value))
                 {
                     _ds._Cmd.TryGetValue(value, out cmd);
-                    client.SendMessage(cmd);
+                    client.SyncSendMessage(cmd);
                 }
-                else client.SendMessage(textBox_cmd.Text);   
+                else client.SyncSendMessage(textBox_cmd.Text);
+  
             }
             catch (Exception ex)
             {
@@ -145,7 +147,7 @@ namespace New_CUI
         private void button_START_Click(object sender, EventArgs e)
         {
             bool IsSuccess = false;
-            IsSuccess = client.SendMessage(Command.cmd_Start);
+            IsSuccess = client.SyncSendMessage(Command.cmd_Start);
             if (IsSuccess)
             {
                 if (configcheck == 0)
@@ -164,10 +166,14 @@ namespace New_CUI
         private void button_STOP_Click(object sender, EventArgs e)
         {
             bool IsSuccess = false;
-            IsSuccess = client.SendMessage(Command.cmd_Stop);
+            IsSuccess = client.SyncSendMessage(Command.cmd_Stop);
             if (IsSuccess)
             {
-                sw.Close();
+                if (sw != null)
+                {
+                    sw.Close();
+                    logfileopen = false;
+                }
                 button_START.Enabled = true;
                 button_STOP.Enabled = false;
                 toolStripStatusLabel.Text = "TEM STOP 전송";
@@ -192,8 +198,8 @@ namespace New_CUI
         private void btn_INIT_Click(object sender, EventArgs e)
         {
             bool IsSuccess = false;
-            
-            IsSuccess = client.SendMessage(Command.cmd_Init);
+
+            IsSuccess = client.SyncSendMessage(Command.cmd_Init);
             if (IsSuccess)
             {
                 button_INIT.Enabled = false;
@@ -235,7 +241,7 @@ namespace New_CUI
         private void button_Discon_Click(object sender, EventArgs e)
         {
             bool IsSuccess = false;
-            client.SendMessage(DataStructure.Command.cmd_Stop);
+            client.SyncSendMessage(DataStructure.Command.cmd_Stop);
             IsSuccess = client.Disconnect();
             if (IsSuccess)
             {
@@ -297,7 +303,7 @@ namespace New_CUI
             try
             {
                 _ds._Cmd.TryGetValue(1, out cmd);
-                IsSuccess = client.SendMessage(cmd);
+                IsSuccess = client.SyncSendMessage(cmd);
             }
             catch (Exception ex)
             {
@@ -312,7 +318,7 @@ namespace New_CUI
             try
             {
                 _ds._Cmd.TryGetValue(2, out cmd);
-                IsSuccess = client.SendMessage(cmd);
+                IsSuccess = client.SyncSendMessage(cmd);
             }
             catch (Exception ex)
             {
@@ -327,7 +333,7 @@ namespace New_CUI
             try
             {
                 _ds._Cmd.TryGetValue(3, out cmd);
-                IsSuccess = client.SendMessage(cmd);
+                IsSuccess = client.SyncSendMessage(cmd);
             }
             catch (Exception ex)
             {
@@ -342,7 +348,7 @@ namespace New_CUI
             try
             {
                 _ds._Cmd.TryGetValue(4, out cmd);
-                IsSuccess = client.SendMessage(cmd);
+                IsSuccess = client.SyncSendMessage(cmd);
             }
             catch (Exception ex)
             {
@@ -357,7 +363,7 @@ namespace New_CUI
             try
             {
                 _ds._Cmd.TryGetValue(5, out cmd);
-                IsSuccess = client.SendMessage(cmd);
+                IsSuccess = client.SyncSendMessage(cmd);
             }
             catch (Exception ex)
             {

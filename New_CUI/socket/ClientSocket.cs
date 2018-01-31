@@ -38,8 +38,8 @@ namespace socket
                 {
                     IsConnected = true;
 
-                    receiverHandler = new AsyncCallback(HandleDataReceive);
-                    senderHandler = new AsyncCallback(HandleDataSend);
+                    //receiverHandler = new AsyncCallback(HandleDataReceive);
+                    //senderHandler = new AsyncCallback(HandleDataSend);
 
                 
                     // 4096 바이트의 크기를 갖는 바이트 배열을 가진 AsyncObject 클래스 생성
@@ -51,7 +51,7 @@ namespace socket
                     //SendMessage(Command.cmd_Init);
 
                     // 비동기적으로 들어오는 자료를 수신하기 위해 BeginReceive 메서드 사용!
-                    client.BeginReceive(ao.buffer, 0, ao.buffer.Length, SocketFlags.None, receiverHandler, ao);
+                    //client.BeginReceive(ao.buffer, 0, ao.buffer.Length, SocketFlags.None, receiverHandler, ao);
 
                     Handler.LogMsg.AddNShow("[CUI] Socket Connection Success ");
                 }
@@ -106,10 +106,11 @@ namespace socket
                     // 여기도 마찬가지로 보낸 바이트 수 만큼 배열 선언 후 복사한다.
                     Byte[] msgByte = new Byte[sentBytes];
                     Array.Copy(ao.buffer, msgByte, sentBytes);
-                    Handler.LogMsg.AddNShow("[Send] " + System.Text.Encoding.UTF8.GetString(msgByte));
+                    Handler.LogMsg.AddNShow("[CUI] Send: " + System.Text.Encoding.UTF8.GetString(msgByte));
 
                     IsSent = true;
                 }
+                SyncReceiveMessage();
                 
             }
             catch (Exception e)
@@ -120,7 +121,7 @@ namespace socket
             return IsSent;
         }
 
-        public bool SyncReceiveMessage()
+        private bool SyncReceiveMessage()
         {
             bool IsReceived = false;
             ClientObject co = new ClientObject(1024); ;
@@ -179,7 +180,6 @@ namespace socket
             {
                 
                 client.BeginSend(ao.buffer, 0, ao.buffer.Length, SocketFlags.None, senderHandler, ao);
-                //Handler.LogMsg.AddNShow("Send Msg : " + System.Text.Encoding.UTF8.GetString(ao.buffer));
 
                 IsSent = true;
             }
