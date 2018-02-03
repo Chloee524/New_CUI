@@ -14,7 +14,9 @@
         protected override void Dispose(bool disposing)
         {
             client.SendMessage(DataStructure.Command.cmd_Stop);
-            client.Disconnect();
+            client.exidDisconnet();
+            //System.Diagnostics.Process.GetCurrentProcess().Kill();
+
             if (disposing && (components != null))
             {
                 components.Dispose();
@@ -171,7 +173,7 @@
             this.panel1.Controls.Add(this.textBox_cmd);
             this.panel1.Controls.Add(this.button_Send);
             this.panel1.Controls.Add(this.label3);
-            this.panel1.Location = new System.Drawing.Point(574, 525);
+            this.panel1.Location = new System.Drawing.Point(935, 530);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(411, 124);
             this.panel1.TabIndex = 11;
@@ -212,7 +214,7 @@
             this.panel2.Controls.Add(this.label2);
             this.panel2.Controls.Add(this.button_START);
             this.panel2.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.panel2.Location = new System.Drawing.Point(574, 12);
+            this.panel2.Location = new System.Drawing.Point(935, 12);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(411, 254);
             this.panel2.TabIndex = 9;
@@ -295,14 +297,14 @@
             this.panel3.Controls.Add(this.label6);
             this.panel3.Location = new System.Drawing.Point(9, 12);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(559, 35);
+            this.panel3.Size = new System.Drawing.Size(920, 35);
             this.panel3.TabIndex = 12;
             // 
             // label6
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("맑은 고딕", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.label6.Location = new System.Drawing.Point(194, 4);
+            this.label6.Location = new System.Drawing.Point(379, 4);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(114, 25);
             this.label6.TabIndex = 13;
@@ -313,7 +315,7 @@
             this.panel4.Controls.Add(this.listBoxLog);
             this.panel4.Location = new System.Drawing.Point(9, 44);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(559, 605);
+            this.panel4.Size = new System.Drawing.Size(920, 605);
             this.panel4.TabIndex = 14;
             // 
             // listBoxLog
@@ -324,9 +326,8 @@
             this.listBoxLog.ItemHeight = 20;
             this.listBoxLog.Location = new System.Drawing.Point(0, 3);
             this.listBoxLog.Name = "listBoxLog";
-            this.listBoxLog.ScrollAlwaysVisible = true;
             this.listBoxLog.SelectionMode = System.Windows.Forms.SelectionMode.None;
-            this.listBoxLog.Size = new System.Drawing.Size(559, 604);
+            this.listBoxLog.Size = new System.Drawing.Size(920, 604);
             this.listBoxLog.TabIndex = 15;
             // 
             // panel5
@@ -338,7 +339,7 @@
             this.panel5.Controls.Add(this.button_2);
             this.panel5.Controls.Add(this.button_1);
             this.panel5.Controls.Add(this.listBox_cmd);
-            this.panel5.Location = new System.Drawing.Point(574, 270);
+            this.panel5.Location = new System.Drawing.Point(935, 273);
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(411, 246);
             this.panel5.TabIndex = 15;
@@ -428,7 +429,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(997, 666);
+            this.ClientSize = new System.Drawing.Size(1358, 666);
             this.Controls.Add(this.panel5);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panel3);
@@ -472,7 +473,7 @@
         private System.Windows.Forms.Button button_INIT;
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel;
-        private System.Windows.Forms.ListBox listBoxLog;
+        public System.Windows.Forms.ListBox listBoxLog;
         private System.Windows.Forms.Button button_Discon;
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.Button button_5;

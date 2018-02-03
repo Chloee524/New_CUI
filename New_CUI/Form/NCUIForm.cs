@@ -28,7 +28,8 @@ namespace New_CUI
         private string logextension = ".log";
         private int configcheck =-1;
         private bool logfileopen = false;
-        private StreamWriter sw = null;
+        private FileManager.LogFileWrite logfile = new FileManager.LogFileWrite();
+        private static object syncRoot = new object();
 
         public NCUIForm()
         {
@@ -70,13 +71,35 @@ namespace New_CUI
             else if (configcheck == -2) Handler.LogMsg.AddNShow("[CUI] Config 경로에 파일이 없습니다.");
             else Handler.LogMsg.AddNShow("[CUI] Config Read 중 Error 발생");
         }
-        private void DispLog(string msg)
-        {
-            if (listBoxLog.Items.Count >= 500 && listBoxLog.Items[0] != null)
-                listBoxLog.Items.RemoveAt(0);
 
-            if (logfileopen && sw != null) sw.WriteLine(msg);
-            listBoxLog.TopIndex = listBoxLog.Items.Add(msg);
+        public void DispLog(string msg)
+        {
+            lock (syncRoot)
+            {
+                if (this.InvokeRequired)
+                {
+                    this.Invoke(new MethodInvoker(delegate()
+                    {
+                        if (listBoxLog.Items.Count >= 30 && listBoxLog.Items[0] != null)
+                            listBoxLog.Items.RemoveAt(0);
+
+                        if (logfileopen) logfile.logfilewrite(msg);
+
+                        listBoxLog.TopIndex = listBoxLog.Items.Add(msg);
+                    }
+                    ));
+
+                }
+                else
+                {
+                    if (listBoxLog.Items.Count >= 30 && listBoxLog.Items[0] != null)
+                        listBoxLog.Items.RemoveAt(0);
+
+                    if (logfileopen) logfile.logfilewrite(msg);
+
+                    listBoxLog.TopIndex = listBoxLog.Items.Add(msg);
+                }
+            }
         }
         private void SetLogHandler()
         {
@@ -94,15 +117,13 @@ namespace New_CUI
             int value = 0;
             try
             {
-                if(chkTest.Checked) Handler.LogMsg.AddNShow("가나다라마바사아자차카타파하가나다라마바사아자차카타파하");
                 int.TryParse(textBox_cmd.Text, out value);
                 if (configcheck == 0 && _ds._Cmd.ContainsKey(value))
                 {
                     _ds._Cmd.TryGetValue(value, out cmd);
-                    client.SyncSendMessage(cmd);
+                    client.SendMessage(cmd);
                 }
-                else client.SyncSendMessage(textBox_cmd.Text);
-  
+                else client.SendMessage(textBox_cmd.Text);
             }
             catch (Exception ex)
             {
@@ -147,14 +168,13 @@ namespace New_CUI
         private void button_START_Click(object sender, EventArgs e)
         {
             bool IsSuccess = false;
-            IsSuccess = client.SyncSendMessage(Command.cmd_Start);
+            IsSuccess = client.SendMessage(Command.cmd_Start);
             if (IsSuccess)
             {
                 if (configcheck == 0)
                 {
-                    logpath = Path.Combine(_ds.DIR, WriteDateTime() + logextension);
-                    sw = new StreamWriter(logpath, true, System.Text.UTF8Encoding.UTF8);
-                    logfileopen = true;
+                    logfile.FilePath = Path.Combine(_ds.DIR, WriteDateTime() + logextension);
+                    logfileopen = logfile.logfileopen();
                 }
                 button_START.Enabled = false;
                 button_STOP.Enabled = true;
@@ -166,12 +186,12 @@ namespace New_CUI
         private void button_STOP_Click(object sender, EventArgs e)
         {
             bool IsSuccess = false;
-            IsSuccess = client.SyncSendMessage(Command.cmd_Stop);
+            IsSuccess = client.SendMessage(Command.cmd_Stop);
             if (IsSuccess)
             {
-                if (sw != null)
+                if (logfileopen)
                 {
-                    sw.Close();
+                    logfile.logfileclose();
                     logfileopen = false;
                 }
                 button_START.Enabled = true;
@@ -199,7 +219,7 @@ namespace New_CUI
         {
             bool IsSuccess = false;
 
-            IsSuccess = client.SyncSendMessage(Command.cmd_Init);
+            IsSuccess = client.SendMessage(Command.cmd_Init);
             if (IsSuccess)
             {
                 button_INIT.Enabled = false;
@@ -241,7 +261,7 @@ namespace New_CUI
         private void button_Discon_Click(object sender, EventArgs e)
         {
             bool IsSuccess = false;
-            client.SyncSendMessage(DataStructure.Command.cmd_Stop);
+            client.SendMessage(DataStructure.Command.cmd_Stop);
             IsSuccess = client.Disconnect();
             if (IsSuccess)
             {
@@ -303,7 +323,7 @@ namespace New_CUI
             try
             {
                 _ds._Cmd.TryGetValue(1, out cmd);
-                IsSuccess = client.SyncSendMessage(cmd);
+                IsSuccess = client.SendMessage(cmd);
             }
             catch (Exception ex)
             {
@@ -318,7 +338,7 @@ namespace New_CUI
             try
             {
                 _ds._Cmd.TryGetValue(2, out cmd);
-                IsSuccess = client.SyncSendMessage(cmd);
+                IsSuccess = client.SendMessage(cmd);
             }
             catch (Exception ex)
             {
@@ -333,7 +353,7 @@ namespace New_CUI
             try
             {
                 _ds._Cmd.TryGetValue(3, out cmd);
-                IsSuccess = client.SyncSendMessage(cmd);
+                IsSuccess = client.SendMessage(cmd);
             }
             catch (Exception ex)
             {
@@ -348,7 +368,7 @@ namespace New_CUI
             try
             {
                 _ds._Cmd.TryGetValue(4, out cmd);
-                IsSuccess = client.SyncSendMessage(cmd);
+                IsSuccess = client.SendMessage(cmd);
             }
             catch (Exception ex)
             {
@@ -363,7 +383,7 @@ namespace New_CUI
             try
             {
                 _ds._Cmd.TryGetValue(5, out cmd);
-                IsSuccess = client.SyncSendMessage(cmd);
+                IsSuccess = client.SendMessage(cmd);
             }
             catch (Exception ex)
             {

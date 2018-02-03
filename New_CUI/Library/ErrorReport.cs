@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Diagnostics;
 using System.IO;
+using System.Windows.Forms;
 
 namespace Library
 {
-    class ErrorReport : Interface.IErrorLog
+    public class ErrorReport : Interface.IErrorLog
     {
         ///////////////////////////////////////////////////////////////////////////
         //
@@ -33,12 +34,14 @@ namespace Library
         ///////////////////////////////////////////////////////////////////////////
         #region VARIABLES
 
-        private static ErrorReport _instance = null;
+        private static volatile ErrorReport _instance = null;
         private List<ErrorMessage> _errorMessage = new List<ErrorMessage>();
         private Interface.DisplayMsgHandler _display;
 
         private delegate string TimeToString(DateTime time);
         TimeToString ConvTimeToString = (x) => (x).ToString("HH:mm:ss");
+        private static readonly object syncLock = new Object();
+        //private New_CUI.NCUIForm mainForm = new New_CUI.NCUIForm();
 
         #endregion  // VARIABLES
 
@@ -56,9 +59,14 @@ namespace Library
             {
                 if (_instance == null)
                 {
-                    _instance = new ErrorReport();
+                    lock(syncLock)
+                    {
+                        if (_instance == null)
+                        {
+                            _instance = new ErrorReport();
+                        }
+                    }
                 }
-
                 return _instance;
             }
 
@@ -88,10 +96,15 @@ namespace Library
         ///////////////////////////////////////////////////////////////////////////
         #region CONSTRUCTOR
 
-        protected ErrorReport()
-        {
-        }
+        //protected ErrorReport()
+        //{
+            
+        //}
 
+        ErrorReport()
+        {
+
+        }
         #endregion  // CONSTRUCTOR
 
 
@@ -114,27 +127,29 @@ namespace Library
         /// <summary>
         /// 오류 메시지를 출력한다.
         /// </summary>
-        public virtual void ShowReport()
+        public void ShowReport()
         {
             try
             {
                 if (_display == null)
                     return;
 
-                foreach (var msg in _errorMessage)
+                lock (_errorMessage)
                 {
-#if false // 스레드 작업시
-                    mainForm.Invoke(new MethodInvoker(delegate()
+                    foreach (var msg in _errorMessage)
                     {
-                        mainForm.AppendText(string.Format("> {0} -- [{1}]", msg.message, ConvTimeToString(msg.time)));
-                    }
-                    ));
-#else
-                    string log = string.Empty;
-                    log = string.Format("[{0}]> {1} {2}", ConvTimeToString(msg.time), msg.message, Environment.NewLine);
-                    _display(log);
+        #if true // 스레드 작업시
+                        string log = string.Empty;
+                        log = string.Format("[{0}]> {1} {2}", ConvTimeToString(msg.time), msg.message, Environment.NewLine);
+                        _display(log);
+        #else
+                        string log = string.Empty;
+                        log = string.Format("[{0}]> {1} {2}", ConvTimeToString(msg.time), msg.message, Environment.NewLine);
+                        _display(log);
 
-#endif
+        #endif
+                    }
+
                 }
             }
             catch (Exception e)
@@ -165,13 +180,15 @@ namespace Library
         {
             DateTime time = new DateTime();
             time = DateTime.Now;
+            lock (_errorMessage)
+            {                          
+                ErrorMessage error = new ErrorMessage();
+                error.message = msg;
+                error.time = time;
+                error.exception = ex;
 
-            ErrorMessage error = new ErrorMessage();
-            error.message = msg;
-            error.time = time;
-            error.exception = ex;
-
-            _errorMessage.Add(error);
+                _errorMessage.Add(error);
+            }
         }
         /// <summary>
         /// 오류 메시지를 저장하고 바로 출력한다.
@@ -188,34 +205,38 @@ namespace Library
         /// </summary>
         public void Debug()
         {
-            StackTrace st = new StackTrace(true);
-
-            foreach (var err in _errorMessage)
+            lock (_errorMessage)
             {
-                if (err.exception == null)
-                    continue;
-            
-                Console.WriteLine("---------------------------------------------------------------");
-                Console.WriteLine("발생시간: {0}", ConvTimeToString(err.time));
-                Console.WriteLine("발생함수: {0}", err.exception.TargetSite);
-                Console.WriteLine("메시지: {0}", err.exception.Message);
-                Console.WriteLine("[THROW 스택]\n{0}", err.exception.StackTrace);
-                Console.WriteLine("[CATCH 스택]");
 
-                string stackIndent = "";
-                for (int i = 0; i < st.FrameCount; i++)
+                StackTrace st = new StackTrace(true);
+
+                foreach (var err in _errorMessage)
                 {
-                    if (i >= 5)
-                        break;
+                    if (err.exception == null)
+                        continue;
 
-                    StackFrame sf = st.GetFrame(i);
-                    Console.WriteLine(stackIndent + " 함수: {0}", sf.GetMethod());
-                    stackIndent += " ";
+                    Console.WriteLine("---------------------------------------------------------------");
+                    Console.WriteLine("발생시간: {0}", ConvTimeToString(err.time));
+                    Console.WriteLine("발생함수: {0}", err.exception.TargetSite);
+                    Console.WriteLine("메시지: {0}", err.exception.Message);
+                    Console.WriteLine("[THROW 스택]\n{0}", err.exception.StackTrace);
+                    Console.WriteLine("[CATCH 스택]");
+
+                    string stackIndent = "";
+                    for (int i = 0; i < st.FrameCount; i++)
+                    {
+                        if (i >= 5)
+                            break;
+
+                        StackFrame sf = st.GetFrame(i);
+                        Console.WriteLine(stackIndent + " 함수: {0}", sf.GetMethod());
+                        stackIndent += " ";
+                    }
+                    Console.WriteLine("---------------------------------------------------------------");
                 }
-                Console.WriteLine("---------------------------------------------------------------");
-            }
 
-            RemoveAll();
+                RemoveAll();
+            }
         }
 
         /// <summary>
@@ -223,12 +244,18 @@ namespace Library
         /// </summary>
         public void RemoveAll()
         {
-            _errorMessage.RemoveRange(0, _errorMessage.Count);
+            lock (_errorMessage)
+            {
+                _errorMessage.RemoveRange(0, _errorMessage.Count);
+            }
         }
 
         public void Removeat(int indexed, int countno)
         {
-            _errorMessage.RemoveRange(indexed, countno);
+            lock (_errorMessage)
+            {
+                _errorMessage.RemoveRange(indexed, countno);
+            }
         }
 
         #endregion  // PUBLIC
