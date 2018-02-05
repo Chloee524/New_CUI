@@ -80,6 +80,8 @@ namespace New_CUI
                 {
                     this.Invoke(new MethodInvoker(delegate()
                     {
+                        ///TEM에서 [CMD]START, [CMD]STOP을 보낼 시
+                        ///CUI에서 User가 START 또는 STOP을 누른 것 처럼 눌림.
                         CheckCmdfromTEM(msg);
                         if (listBoxLog.Items.Count >= 30 && listBoxLog.Items[0] != null)
                             listBoxLog.Items.RemoveAt(0);
@@ -175,7 +177,6 @@ namespace New_CUI
             {
                 DoSTART();
             }
-
         }
 
         public void DoSTART()
