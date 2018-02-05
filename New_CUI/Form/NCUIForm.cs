@@ -80,6 +80,7 @@ namespace New_CUI
                 {
                     this.Invoke(new MethodInvoker(delegate()
                     {
+                        CheckCmdfromTEM(msg);
                         if (listBoxLog.Items.Count >= 30 && listBoxLog.Items[0] != null)
                             listBoxLog.Items.RemoveAt(0);
 
@@ -92,6 +93,7 @@ namespace New_CUI
                 }
                 else
                 {
+                    CheckCmdfromTEM(msg);
                     if (listBoxLog.Items.Count >= 30 && listBoxLog.Items[0] != null)
                         listBoxLog.Items.RemoveAt(0);
 
@@ -171,16 +173,33 @@ namespace New_CUI
             IsSuccess = client.SendMessage(Command.cmd_Start);
             if (IsSuccess)
             {
-                if (configcheck == 0)
-                {
-                    logfile.FilePath = Path.Combine(_ds.DIR, WriteDateTime() + logextension);
-                    logfileopen = logfile.logfileopen();
-                }
-                button_START.Enabled = false;
-                button_STOP.Enabled = true;
-                toolStripStatusLabel.Text = "TEM START 전송";
+                DoSTART();
             }
 
+        }
+
+        public void DoSTART()
+        {
+            if (configcheck == 0)
+            {
+                logfile.FilePath = Path.Combine(_ds.DIR, WriteDateTime() + logextension);
+                logfileopen = logfile.logfileopen();
+            }
+            button_START.Enabled = false;
+            button_STOP.Enabled = true;
+            toolStripStatusLabel.Text = "TEM START 전송";
+        }
+
+        public void DoSTOP()
+        {
+            if (logfileopen)
+            {
+                logfile.logfileclose();
+                logfileopen = false;
+            }
+            button_START.Enabled = true;
+            button_STOP.Enabled = false;
+            toolStripStatusLabel.Text = "TEM STOP 전송";
         }
 
         private void button_STOP_Click(object sender, EventArgs e)
@@ -189,14 +208,7 @@ namespace New_CUI
             IsSuccess = client.SendMessage(Command.cmd_Stop);
             if (IsSuccess)
             {
-                if (logfileopen)
-                {
-                    logfile.logfileclose();
-                    logfileopen = false;
-                }
-                button_START.Enabled = true;
-                button_STOP.Enabled = false;
-                toolStripStatusLabel.Text = "TEM STOP 전송";
+                DoSTOP();
             }
         }
 
@@ -389,6 +401,32 @@ namespace New_CUI
             {
                 Handler.LogMsg.AddNShow("[CUI] Send Error : " + ex.Message);
             }
+        }
+
+        private void CheckCmdfromTEM(string msg)
+        {
+            string cmd = CheckCmdstring(msg);
+            
+            if (cmd.Equals(DataStructure.Command.cmd_Start))
+            {
+                DoSTART();
+            }
+            else if (cmd.Equals(DataStructure.Command.cmd_Stop))
+            {
+                DoSTOP();
+            }
+        }
+
+        private string CheckCmdstring(string cmd)
+        {
+            string rtn = string.Empty;
+            string[] del = { "[CMD]", "\0" };
+
+            string[] data = cmd.Split(del, StringSplitOptions.RemoveEmptyEntries);
+            if (data.Length == 3)
+                rtn = data[1];
+
+            return rtn;
         }
     }
 }

@@ -38,6 +38,8 @@ namespace socket
                 {
                     IsConnected = true;
 
+                    client.ReceiveBufferSize = 1000000;
+                    
                     receiverHandler = new AsyncCallback(HandleDataReceive);
                     senderHandler = new AsyncCallback(HandleDataSend);
 
@@ -246,8 +248,13 @@ namespace socket
                     Byte[] msgByte = new Byte[recvBytes];
                     Array.Copy(co.buffer, msgByte, recvBytes);
 
+                    /// 받은 메세지 확인
+                    /// [CMD]START, [CMD]STOP
+                    string received = System.Text.Encoding.UTF8.GetString(msgByte);
+                    //CheckCmdfromTEM(received);
+
                     // 받은 메세지를 출력
-                    Handler.LogMsg.AddNShow(System.Text.Encoding.UTF8.GetString(msgByte));
+                    Handler.LogMsg.AddNShow(received);
                     // 자료 처리가 끝났으면~
                     // 이제 다시 데이터를 수신받기 위해서 수신 대기를 해야 합니다.
                     // Begin~~ 메서드를 이용해 비동기적으로 작업을 대기했다면
@@ -263,6 +270,9 @@ namespace socket
                 return;
             }
         }
+        
+
+        
 
         private void HandleDataSend(IAsyncResult ar)
         {
