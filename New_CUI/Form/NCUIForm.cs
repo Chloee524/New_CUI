@@ -80,14 +80,14 @@ namespace New_CUI
                 {
                     this.Invoke(new MethodInvoker(delegate()
                     {
-                        ///TEM에서 [CMD]START, [CMD]STOP을 보낼 시
-                        ///CUI에서 User가 START 또는 STOP을 누른 것 처럼 눌림.
-                        CheckCmdfromTEM(msg);
                         if (listBoxLog.Items.Count >= 30 && listBoxLog.Items[0] != null)
                             listBoxLog.Items.RemoveAt(0);
 
                         if (logfileopen) logfile.logfilewrite(msg);
 
+                        ///TEM에서 [CMD]START, [CMD]STOP을 보낼 시
+                        ///CUI에서 User가 START 또는 STOP을 누른 것 처럼 눌림.
+                        CheckCmdfromTEM(msg);
                         listBoxLog.TopIndex = listBoxLog.Items.Add(msg);
                     }
                     ));
@@ -95,12 +95,14 @@ namespace New_CUI
                 }
                 else
                 {
-                    CheckCmdfromTEM(msg);
                     if (listBoxLog.Items.Count >= 30 && listBoxLog.Items[0] != null)
                         listBoxLog.Items.RemoveAt(0);
 
                     if (logfileopen) logfile.logfilewrite(msg);
 
+                    ///TEM에서 [CMD]START, [CMD]STOP을 보낼 시
+                    ///CUI에서 User가 START 또는 STOP을 누른 것 처럼 눌림.
+                    CheckCmdfromTEM(msg);
                     listBoxLog.TopIndex = listBoxLog.Items.Add(msg);
                 }
             }
@@ -179,7 +181,7 @@ namespace New_CUI
             }
         }
 
-        public void DoSTART()
+        private void DoSTART()
         {
             if (configcheck == 0)
             {
@@ -191,7 +193,7 @@ namespace New_CUI
             toolStripStatusLabel.Text = "TEM START 전송";
         }
 
-        public void DoSTOP()
+        private void DoSTOP()
         {
             if (logfileopen)
             {
@@ -235,10 +237,15 @@ namespace New_CUI
             IsSuccess = client.SendMessage(Command.cmd_Init);
             if (IsSuccess)
             {
-                button_INIT.Enabled = false;
-                button_START.Enabled = true;
-                toolStripStatusLabel.Text = "TEM INIT 전송";
+                DoINIT();
             }
+        }
+
+        private void DoINIT()
+        {
+            button_INIT.Enabled = false;
+            button_START.Enabled = true;
+            toolStripStatusLabel.Text = "TEM INIT 전송";
         }
 
         private void button_Connect_EnabledChanged(object sender, EventArgs e)
@@ -406,15 +413,21 @@ namespace New_CUI
 
         private void CheckCmdfromTEM(string msg)
         {
+            int value = 0;
             string cmd = CheckCmdstring(msg);
             
-            if (cmd.Equals(DataStructure.Command.cmd_Start))
+            int.TryParse(cmd, out value);
+
+            if (configcheck == 0 && _ds._Cmd.ContainsKey(value))
             {
-                DoSTART();
+                _ds._Cmd.TryGetValue(value, out cmd);
+                client.SendMessage(cmd);
             }
-            else if (cmd.Equals(DataStructure.Command.cmd_Stop))
+            else
             {
-                DoSTOP();
+                if(cmd.Equals(Command.cmd_Start)) DoSTART();
+                else if (cmd.Equals(Command.cmd_Stop)) DoSTOP();
+                else if (cmd.Equals(Command.cmd_Init)) DoINIT();
             }
         }
 
