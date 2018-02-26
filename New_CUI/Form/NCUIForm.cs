@@ -53,6 +53,7 @@ namespace New_CUI
             button_3.Enabled = false;
             button_4.Enabled = false;
             button_5.Enabled = false;
+            radNormal.Checked = true;
 
             //Read and check Config file
             ConfigRead cf = new ConfigRead();
@@ -174,14 +175,19 @@ namespace New_CUI
         private void button_START_Click(object sender, EventArgs e)
         {
             bool IsSuccess = false;
-            IsSuccess = client.SendMessage(Command.cmd_Start);
-            if (IsSuccess)
+            if (radNormal.Checked)
             {
-                DoSTART();
+                IsSuccess = client.SendMessage(Command.cmd_Start_Normal);
+                DoSTARTNormal();
+            }
+            else
+            {
+                IsSuccess = client.SendMessage(Command.cmd_Start_Fault);
+                DoSTARTFault();
             }
         }
 
-        private void DoSTART()
+        private void DoSTARTNormal()
         {
             if (configcheck == 0)
             {
@@ -190,8 +196,21 @@ namespace New_CUI
             }
             button_START.Enabled = false;
             button_STOP.Enabled = true;
-            toolStripStatusLabel.Text = "TEM START 전송";
+            toolStripStatusLabel.Text = "TEM Normal Mode START 전송";
         }
+
+        private void DoSTARTFault()
+        {
+            if (configcheck == 0)
+            {
+                logfile.FilePath = Path.Combine(_ds.DIR, WriteDateTime() + logextension);
+                logfileopen = logfile.logfileopen();
+            }
+            button_START.Enabled = false;
+            button_STOP.Enabled = true;
+            toolStripStatusLabel.Text = "TEM Fault Mode START 전송";
+        }
+
 
         private void DoSTOP()
         {
@@ -425,7 +444,8 @@ namespace New_CUI
             }
             else
             {
-                if(cmd.Equals(Command.cmd_Start)) DoSTART();
+                if (cmd.Equals(Command.cmd_Start_Normal)) DoSTARTNormal();
+                else if (cmd.Equals(Command.cmd_Start_Fault)) DoSTARTFault();
                 else if (cmd.Equals(Command.cmd_Stop)) DoSTOP();
                 else if (cmd.Equals(Command.cmd_Init)) DoINIT();
             }

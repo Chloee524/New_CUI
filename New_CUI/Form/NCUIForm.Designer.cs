@@ -63,6 +63,9 @@
             this.button_2 = new System.Windows.Forms.Button();
             this.button_1 = new System.Windows.Forms.Button();
             this.listBox_cmd = new System.Windows.Forms.ListBox();
+            this.radNormal = new System.Windows.Forms.RadioButton();
+            this.radFault = new System.Windows.Forms.RadioButton();
+            this.label4 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.statusStrip.SuspendLayout();
@@ -106,7 +109,7 @@
             this.button_Connect.BackColor = System.Drawing.Color.MediumAquamarine;
             this.button_Connect.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_Connect.Font = new System.Drawing.Font("맑은 고딕", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.button_Connect.Location = new System.Drawing.Point(8, 81);
+            this.button_Connect.Location = new System.Drawing.Point(8, 115);
             this.button_Connect.Name = "button_Connect";
             this.button_Connect.Size = new System.Drawing.Size(130, 65);
             this.button_Connect.TabIndex = 4;
@@ -120,7 +123,7 @@
             this.button_START.BackColor = System.Drawing.Color.MediumAquamarine;
             this.button_START.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_START.Font = new System.Drawing.Font("맑은 고딕", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.button_START.Location = new System.Drawing.Point(142, 153);
+            this.button_START.Location = new System.Drawing.Point(142, 187);
             this.button_START.Name = "button_START";
             this.button_START.Size = new System.Drawing.Size(130, 65);
             this.button_START.TabIndex = 5;
@@ -135,7 +138,7 @@
             this.button_STOP.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
             this.button_STOP.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_STOP.Font = new System.Drawing.Font("맑은 고딕", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.button_STOP.Location = new System.Drawing.Point(276, 153);
+            this.button_STOP.Location = new System.Drawing.Point(276, 187);
             this.button_STOP.Name = "button_STOP";
             this.button_STOP.Size = new System.Drawing.Size(130, 65);
             this.button_STOP.TabIndex = 6;
@@ -175,7 +178,7 @@
             this.panel1.Controls.Add(this.textBox_cmd);
             this.panel1.Controls.Add(this.button_Send);
             this.panel1.Controls.Add(this.label3);
-            this.panel1.Location = new System.Drawing.Point(935, 530);
+            this.panel1.Location = new System.Drawing.Point(936, 567);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(411, 124);
             this.panel1.TabIndex = 11;
@@ -204,6 +207,9 @@
             // panel2
             // 
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel2.Controls.Add(this.label4);
+            this.panel2.Controls.Add(this.radFault);
+            this.panel2.Controls.Add(this.radNormal);
             this.panel2.Controls.Add(this.button_Discon);
             this.panel2.Controls.Add(this.statusStrip);
             this.panel2.Controls.Add(this.button_INIT);
@@ -218,7 +224,7 @@
             this.panel2.ForeColor = System.Drawing.SystemColors.ControlText;
             this.panel2.Location = new System.Drawing.Point(935, 12);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(411, 254);
+            this.panel2.Size = new System.Drawing.Size(411, 285);
             this.panel2.TabIndex = 9;
             // 
             // button_Discon
@@ -226,7 +232,7 @@
             this.button_Discon.BackColor = System.Drawing.Color.MediumAquamarine;
             this.button_Discon.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_Discon.Font = new System.Drawing.Font("맑은 고딕", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.button_Discon.Location = new System.Drawing.Point(142, 81);
+            this.button_Discon.Location = new System.Drawing.Point(142, 115);
             this.button_Discon.Name = "button_Discon";
             this.button_Discon.Size = new System.Drawing.Size(130, 65);
             this.button_Discon.TabIndex = 18;
@@ -240,7 +246,7 @@
             this.statusStrip.Font = new System.Drawing.Font("맑은 고딕", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel});
-            this.statusStrip.Location = new System.Drawing.Point(0, 230);
+            this.statusStrip.Location = new System.Drawing.Point(0, 261);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.Size = new System.Drawing.Size(409, 22);
             this.statusStrip.TabIndex = 17;
@@ -256,7 +262,7 @@
             this.button_INIT.BackColor = System.Drawing.Color.MediumAquamarine;
             this.button_INIT.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_INIT.Font = new System.Drawing.Font("맑은 고딕", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.button_INIT.Location = new System.Drawing.Point(276, 81);
+            this.button_INIT.Location = new System.Drawing.Point(276, 115);
             this.button_INIT.Name = "button_INIT";
             this.button_INIT.Size = new System.Drawing.Size(130, 65);
             this.button_INIT.TabIndex = 16;
@@ -270,7 +276,7 @@
             this.button1.BackColor = System.Drawing.Color.MediumAquamarine;
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button1.Font = new System.Drawing.Font("맑은 고딕", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.button1.Location = new System.Drawing.Point(8, 153);
+            this.button1.Location = new System.Drawing.Point(8, 187);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(130, 65);
             this.button1.TabIndex = 15;
@@ -317,7 +323,7 @@
             this.panel4.Controls.Add(this.listBoxLog);
             this.panel4.Location = new System.Drawing.Point(9, 44);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(920, 605);
+            this.panel4.Size = new System.Drawing.Size(920, 647);
             this.panel4.TabIndex = 14;
             // 
             // listBoxLog
@@ -329,7 +335,7 @@
             this.listBoxLog.Location = new System.Drawing.Point(0, 3);
             this.listBoxLog.Name = "listBoxLog";
             this.listBoxLog.SelectionMode = System.Windows.Forms.SelectionMode.None;
-            this.listBoxLog.Size = new System.Drawing.Size(920, 604);
+            this.listBoxLog.Size = new System.Drawing.Size(920, 644);
             this.listBoxLog.TabIndex = 15;
             // 
             // panel5
@@ -341,7 +347,7 @@
             this.panel5.Controls.Add(this.button_2);
             this.panel5.Controls.Add(this.button_1);
             this.panel5.Controls.Add(this.listBox_cmd);
-            this.panel5.Location = new System.Drawing.Point(935, 273);
+            this.panel5.Location = new System.Drawing.Point(936, 309);
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(411, 246);
             this.panel5.TabIndex = 15;
@@ -427,11 +433,45 @@
             this.listBox_cmd.Size = new System.Drawing.Size(292, 229);
             this.listBox_cmd.TabIndex = 0;
             // 
+            // radNormal
+            // 
+            this.radNormal.AutoSize = true;
+            this.radNormal.Font = new System.Drawing.Font("맑은 고딕", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.radNormal.Location = new System.Drawing.Point(158, 78);
+            this.radNormal.Name = "radNormal";
+            this.radNormal.Size = new System.Drawing.Size(97, 29);
+            this.radNormal.TabIndex = 19;
+            this.radNormal.TabStop = true;
+            this.radNormal.Text = "Normal";
+            this.radNormal.UseVisualStyleBackColor = true;
+            // 
+            // radFault
+            // 
+            this.radFault.AutoSize = true;
+            this.radFault.Font = new System.Drawing.Font("맑은 고딕", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.radFault.Location = new System.Drawing.Point(305, 78);
+            this.radFault.Name = "radFault";
+            this.radFault.Size = new System.Drawing.Size(74, 29);
+            this.radFault.TabIndex = 20;
+            this.radFault.TabStop = true;
+            this.radFault.Text = "Fault";
+            this.radFault.UseVisualStyleBackColor = true;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("맑은 고딕", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label4.Location = new System.Drawing.Point(11, 82);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(108, 25);
+            this.label4.TabIndex = 21;
+            this.label4.Text = "Test Mode";
+            // 
             // NCUIForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1358, 666);
+            this.ClientSize = new System.Drawing.Size(1358, 707);
             this.Controls.Add(this.panel5);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panel3);
@@ -484,6 +524,9 @@
         private System.Windows.Forms.Button button_2;
         private System.Windows.Forms.Button button_1;
         private System.Windows.Forms.ListBox listBox_cmd;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.RadioButton radFault;
+        private System.Windows.Forms.RadioButton radNormal;
 
     }
 }

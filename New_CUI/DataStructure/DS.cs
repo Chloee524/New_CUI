@@ -47,7 +47,9 @@ namespace DataStructure
 
     public class Command
     {
-        public const string cmd_Start = "START";
+        //public const string cmd_Start = "START";
+        public const string cmd_Start_Normal = "START0";
+        public const string cmd_Start_Fault = "START1";
         public const string cmd_Stop = "STOP";
         public const string cmd_Init = "INIT";
         public const string IP = "IP";
