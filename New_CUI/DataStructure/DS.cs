@@ -60,5 +60,7 @@ namespace DataStructure
         public const string cmd_3 = "3";
         public const string cmd_4 = "4";
         public const string cmd_5 = "5";
+        public const string cmd_tm_Normal = "TestMode[0]";
+        public const string cmd_tm_Fault = "TestMode[1]";
     }
 }

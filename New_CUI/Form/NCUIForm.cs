@@ -462,5 +462,21 @@ namespace New_CUI
 
             return rtn;
         }
+
+        private void radNormal_CheckedChanged(object sender, EventArgs e)
+        {
+            if (button_STOP.Enabled && radNormal.Checked)
+            {
+                client.SendMessage(Command.cmd_tm_Normal);
+            }
+        }
+
+        private void radFault_CheckedChanged(object sender, EventArgs e)
+        {
+            if (button_STOP.Enabled && radFault.Checked)
+            {
+                client.SendMessage(Command.cmd_tm_Fault);
+            }
+        }
     }
 }

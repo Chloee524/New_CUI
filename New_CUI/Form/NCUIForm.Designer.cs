@@ -46,6 +46,9 @@
             this.chkTest = new System.Windows.Forms.CheckBox();
             this.textBox_cmd = new System.Windows.Forms.TextBox();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.label4 = new System.Windows.Forms.Label();
+            this.radFault = new System.Windows.Forms.RadioButton();
+            this.radNormal = new System.Windows.Forms.RadioButton();
             this.button_Discon = new System.Windows.Forms.Button();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
@@ -63,9 +66,6 @@
             this.button_2 = new System.Windows.Forms.Button();
             this.button_1 = new System.Windows.Forms.Button();
             this.listBox_cmd = new System.Windows.Forms.ListBox();
-            this.radNormal = new System.Windows.Forms.RadioButton();
-            this.radFault = new System.Windows.Forms.RadioButton();
-            this.label4 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.statusStrip.SuspendLayout();
@@ -226,6 +226,42 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(411, 285);
             this.panel2.TabIndex = 9;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("맑은 고딕", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label4.Location = new System.Drawing.Point(11, 82);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(108, 25);
+            this.label4.TabIndex = 21;
+            this.label4.Text = "Test Mode";
+            // 
+            // radFault
+            // 
+            this.radFault.AutoSize = true;
+            this.radFault.Font = new System.Drawing.Font("맑은 고딕", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.radFault.Location = new System.Drawing.Point(305, 78);
+            this.radFault.Name = "radFault";
+            this.radFault.Size = new System.Drawing.Size(74, 29);
+            this.radFault.TabIndex = 20;
+            this.radFault.TabStop = true;
+            this.radFault.Text = "Fault";
+            this.radFault.UseVisualStyleBackColor = true;
+            this.radFault.CheckedChanged += new System.EventHandler(this.radFault_CheckedChanged);
+            // 
+            // radNormal
+            // 
+            this.radNormal.AutoSize = true;
+            this.radNormal.Font = new System.Drawing.Font("맑은 고딕", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.radNormal.Location = new System.Drawing.Point(158, 78);
+            this.radNormal.Name = "radNormal";
+            this.radNormal.Size = new System.Drawing.Size(97, 29);
+            this.radNormal.TabIndex = 19;
+            this.radNormal.TabStop = true;
+            this.radNormal.Text = "Normal";
+            this.radNormal.UseVisualStyleBackColor = true;
+            this.radNormal.CheckedChanged += new System.EventHandler(this.radNormal_CheckedChanged);
             // 
             // button_Discon
             // 
@@ -432,40 +468,6 @@
             this.listBox_cmd.ScrollAlwaysVisible = true;
             this.listBox_cmd.Size = new System.Drawing.Size(292, 229);
             this.listBox_cmd.TabIndex = 0;
-            // 
-            // radNormal
-            // 
-            this.radNormal.AutoSize = true;
-            this.radNormal.Font = new System.Drawing.Font("맑은 고딕", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.radNormal.Location = new System.Drawing.Point(158, 78);
-            this.radNormal.Name = "radNormal";
-            this.radNormal.Size = new System.Drawing.Size(97, 29);
-            this.radNormal.TabIndex = 19;
-            this.radNormal.TabStop = true;
-            this.radNormal.Text = "Normal";
-            this.radNormal.UseVisualStyleBackColor = true;
-            // 
-            // radFault
-            // 
-            this.radFault.AutoSize = true;
-            this.radFault.Font = new System.Drawing.Font("맑은 고딕", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.radFault.Location = new System.Drawing.Point(305, 78);
-            this.radFault.Name = "radFault";
-            this.radFault.Size = new System.Drawing.Size(74, 29);
-            this.radFault.TabIndex = 20;
-            this.radFault.TabStop = true;
-            this.radFault.Text = "Fault";
-            this.radFault.UseVisualStyleBackColor = true;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("맑은 고딕", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.label4.Location = new System.Drawing.Point(11, 82);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(108, 25);
-            this.label4.TabIndex = 21;
-            this.label4.Text = "Test Mode";
             // 
             // NCUIForm
             // 

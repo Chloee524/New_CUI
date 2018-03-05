@@ -61,3 +61,12 @@ D:\0 Lab\0_Project\3 ZEUS\New_CUI_0219\New_CUI\obj\x86\Release\New_CUI.csprojRes
 D:\0 Lab\0_Project\3 ZEUS\New_CUI_0219\New_CUI\obj\x86\Release\New_CUI.NCUIForm.resources
 D:\0 Lab\0_Project\3 ZEUS\New_CUI_0219\New_CUI\obj\x86\Release\New_CUI.Properties.Resources.resources
 D:\0 Lab\0_Project\3 ZEUS\New_CUI_0219\New_CUI\obj\x86\Release\New_CUI.csproj.GenerateResource.Cache
+D:\0 Lab\0_Project\3 ZEUS\New_CUI_0305\New_CUI\bin\Release\New_CUI.exe.config
+D:\0 Lab\0_Project\3 ZEUS\New_CUI_0305\New_CUI\obj\x86\Release\New_CUI.exe
+D:\0 Lab\0_Project\3 ZEUS\New_CUI_0305\New_CUI\obj\x86\Release\New_CUI.pdb
+D:\0 Lab\0_Project\3 ZEUS\New_CUI_0305\New_CUI\bin\Release\New_CUI.exe
+D:\0 Lab\0_Project\3 ZEUS\New_CUI_0305\New_CUI\bin\Release\New_CUI.pdb
+D:\0 Lab\0_Project\3 ZEUS\New_CUI_0305\New_CUI\obj\x86\Release\New_CUI.csprojResolveAssemblyReference.cache
+D:\0 Lab\0_Project\3 ZEUS\New_CUI_0305\New_CUI\obj\x86\Release\New_CUI.NCUIForm.resources
+D:\0 Lab\0_Project\3 ZEUS\New_CUI_0305\New_CUI\obj\x86\Release\New_CUI.Properties.Resources.resources
+D:\0 Lab\0_Project\3 ZEUS\New_CUI_0305\New_CUI\obj\x86\Release\New_CUI.csproj.GenerateResource.Cache
