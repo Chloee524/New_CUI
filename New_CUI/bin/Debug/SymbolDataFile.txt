@@ -1,0 +1,304 @@
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------												
+//	<Symbol Name>				<SUT ¹øÈ£>		<IN/OUT>		  <FORMAT>		<EventType>			<MaxWaitingTime(s)>		
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------												
+												// 1: IN						// 0: cont. signal
+												// 2: OUT						// 10: EVENT (initial 0)
+																				// 11: EVENT (initial 1)
+																				// 12: EVENT (initial 2)
+																				// 2: SEQUENCE DELAY
+
+//PMC
+	PROC_START						0				1				int				0						0
+	PROC_END						0				1				int				0						0
+	SEQ_START						0				1				int				0						0
+	SEQ_END							0				1				int				0						0
+																				
+	RECIPE_RUN						0				1				int				10						0
+	RECIPE_STATUS					0				1				int				0						0
+	SEQ_RESULT						0				1				int				0						0
+							
+//For HD Test
+	In								0				1				int				0						0
+	Out                    		    0        	    2         		int 	        0						0
+	
+
+//Fault Testing
+
+	TestMode						0				1				int				0						0
+	ECAT_FaultType					0				2				int				0						0
+	MC211_FaultType					0				2				int				0						0
+	EDIA_FaultType					0				2				int				0						0
+	
+	
+	
+//sequence names... 	
+	WAFER_EXIST_CHECK_PRESENT		0				1				int				2						30
+	WAFER_EXIST_CHECK_ABSENT		0				1				int				2						30
+	WAFER_SEPARATION_CHECK			0				1				int				2						30
+	WAFER_ALL_CHECK_PRESENT			0				1				int				2						30
+	WAFER_ALL_CHECK_ABSENT			0				1				int				2						30
+	WAFER_CHUCK						0				1				int				2						30
+	WAFER_UNCHUCK					0				1				int				2						30
+	GATE_OPEN						0				1				int				2						30
+	GATE_CLOSE						0				1				int				2						30
+	TBL_INIT						0				1				int				2						30
+	TBL_HOME						0				1				int				2						30
+	TBL_SPIN_CW_MANUAL				0				1				int				2						30
+	TBL_SPIN_CW_PROCESS				0				1				int				2						30
+	TBL_SPIN_CCW_MANUAL				0				1				int				2						30
+	TBL_SPIN_CCW_PROCESS			0				1				int				2						30
+	TBL_MOVE_ABS					0				1				int				2						30
+	TBL_MOVE_INC					0				1				int				2						30
+	TBL_ZERO_SET					0				1				int				2						30
+	TBL_ALARM_RESET					0				1				int				2						30
+	Nozzle1_UP						0				1				int				2						30
+	Nozzle1_DOWN					0				1				int				2						30
+	Nozzle1_ZERO_SET				0				1				int				2						30
+	Nozzle1_ALM_CLEAR				0				1				int				2						30
+	Nozzle1_HOME					0				1				int				2						30
+	Nozzle1_MOVE					0				1				int				2						30
+	Nozzle1_PROCESS_MOVE			0				1				int				2						30
+	Nozzle1_JOG_MOVE				0				1				int				2						30
+	Nozzle1_JOG_CW					0				1				int				2						30
+	Nozzle1_JOG_CCW					0				1				int				2						30
+	Nozzle1_SWING					0				1				int				2						30
+	Nozzle1_READY					0				1				int				2						30
+	Nozzle1_READY_ALL				0				1				int				2						30
+	Nozzle2_UP						0				1				int				2						30
+	Nozzle2_DOWN					0				1				int				2						30
+	Nozzle2_ZERO_SET				0				1				int				2						30
+	Nozzle2_ALM_CLEAR				0				1				int				2						30
+	Nozzle2_HOME					0				1				int				2						30
+	Nozzle2_MOVE					0				1				int				2						30
+	Nozzle2_PROCESS_MOVE			0				1				int				2						30
+	Nozzle2_JOG_MOVE				0				1				int				2						30
+	Nozzle2_JOG_CW					0				1				int				2						30
+	Nozzle2_JOG_CCW					0				1				int				2						30
+	Nozzle2_SWING					0				1				int				2						30
+	Nozzle2_READY					0				1				int				2						30
+	Nozzle2_READY_ALL				0				1				int				2						30
+	CUP_INIT						0				1				int				2						30
+	CUP_HOME						0				1				int				2						30
+	CUP_POS_1						0				1				int				2						30
+	CUP_POS_2						0				1				int				2						30
+	CUP_POS_3						0				1				int				2						30
+	CUP_ALARM_RESET					0				1				int				2						30
+
+
+//MC211	(Nozzle1+Nozzle2)
+	PM1_Nozzle1_Servo				0				1				int				0						0
+	PM1_Nozzle1_JogStart			0				1				int				12						0
+	PM1_Nozzle1_JogStop				0				1				int				11						0
+	PM1_Nozzle1_AutoStartPoint		0				1				int				0						0
+	PM1_Nozzle1_AutoEndPoint		0				1				int				0						0
+	PM1_Nozzle1_AutoStart			0				1				int				11						0
+	PM1_Nozzle1_PointData			0				1				int				14						0
+	PM1_Nozzle1_IncStart			0				1				int				10						0
+	PM1_Nozzle1_HomeStart			0				1				int				11						0
+	PM1_Nozzle1_MotorStop			0				1				int				10						0
+	PM1_Nozzle1_EmgStop				0				1				int				10						0
+	PM1_Nozzle1_MotorAlarmReset		0				1				int				11						0
+	PM1_Nozzle1_ServoAlarmReset		0				1				int				11						0
+	PM1_Nozzle1_JogSpd				0				1				double			0						0
+	PM1_Nozzle1_JogAcc				0				1				double			0						0
+	PM1_Nozzle1_JogDec				0				1				double			0						0
+	PM1_Nozzle1_Position			0				1				double			0						0
+	PM1_Nozzle1_Speed				0				1				double			0						0
+	PM1_Nozzle1_Acc					0				1				double			0						0
+	PM1_Nozzle1_Dec					0				1				double			0						0
+	PM1_Nozzle1_changJogSpd			0				1				double			0						0
+	PM1_Nozzle1_ServoSts			0				2				int				0						0
+	PM1_Nozzle1_MotorAlarm			0				2				int				0						0
+	PM1_Nozzle1_ServoAlarm			0				2				int				0						0
+	PM1_Nozzle1_ReadySts			0				2				int				0						0
+	PM1_Nozzle1_OpSts				0				2				int				0						0
+	PM1_Nozzle1_ZpSts				0				2				int				0						0
+	PM1_Nozzle1_Smz					0				2				int				0						0
+	PM1_Nozzle1_LspSts				0				2				int				0						0
+	PM1_Nozzle1_LsnSts				0				2				int				0						0
+	PM1_Nozzle1_DogSts				0				2				int				0						0
+	PM1_Nozzle1_JogStopComplete		0				2				int				0						0
+	PM1_Nozzle1_MoveStopComplete	0				2				int				0						0
+	PM1_Nozzle1_CurrentPos			0				2				double			0						0
+	PM1_Nozzle1_SpdRead				0				2				double			0						0
+	PM1_Nozzle1_AccRead				0				2				double			0						0
+	PM1_Nozzle1_DecRead				0				2				double			0						0
+	PM1_Nozzle1_CurrentSpd			0				2				double			0						0
+	PM1_Nozzle1_InpSts				0				2				int				0						0
+							
+	PM1_Nozzle2_Servo				0				1				int				0						0
+	PM1_Nozzle2_JogStart			0				1				int				12						0
+	PM1_Nozzle2_JogStop				0				1				int				11						0
+	PM1_Nozzle2_AutoStartPoint		0				1				int				0						0
+	PM1_Nozzle2_AutoEndPoint		0				1				int				0						0
+	PM1_Nozzle2_AutoStart			0				1				int				11						0
+	PM1_Nozzle2_PointData			0				1				int				0						0
+	PM1_Nozzle2_IncStart			0				1				int				10						0
+	PM1_Nozzle2_HomeStart			0				1				int				11						0
+	PM1_Nozzle2_MotorStop			0				1				int				10						0
+	PM1_Nozzle2_EmgStop				0				1				int				10						0
+	PM1_Nozzle2_MotorAlarmReset		0				1				int				11						0
+	PM1_Nozzle2_ServoAlarmReset		0				1				int				11						0
+	PM1_Nozzle2_JogSpd				0				1				double			0						0
+	PM1_Nozzle2_JogAcc				0				1				double			0						0
+	PM1_Nozzle2_JogDec				0				1				double			0						0
+	PM1_Nozzle2_Position			0				1				double			0						0
+	PM1_Nozzle2_Speed				0				1				double			0						0
+	PM1_Nozzle2_Acc					0				1				double			0						0
+	PM1_Nozzle2_Dec					0				1				double			0						0
+	PM1_Nozzle2_changJogSpd			0				1				double			0						0
+	PM1_Nozzle2_ServoSts			0				2				int				0						0
+	PM1_Nozzle2_MotorAlarm			0				2				int				0						0
+	PM1_Nozzle2_ServoAlarm			0				2				int				0						0
+	PM1_Nozzle2_ReadySts			0				2				int				0						0
+	PM1_Nozzle2_OpSts				0				2				int				0						0
+	PM1_Nozzle2_ZpSts				0				2				int				0						0
+	PM1_Nozzle2_Smz					0				2				int				0						0
+	PM1_Nozzle2_LspSts				0				2				int				0						0
+	PM1_Nozzle2_LsnSts				0				2				int				0						0
+	PM1_Nozzle2_DogSts				0				2				int				0						0
+	PM1_Nozzle2_JogStopComplete		0				2				int				0						0
+	PM1_Nozzle2_MoveStopComplete	0				2				int				0						0
+	PM1_Nozzle2_CurrentPos			0				2				double			0						0
+	PM1_Nozzle2_SpdRead				0				2				double			0						0
+	PM1_Nozzle2_AccRead				0				2				double			0						0
+	PM1_Nozzle2_DecRead				0				2				double			0						0
+	PM1_Nozzle2_CurrentSpd			0				2				double			0						0
+	PM1_Nozzle2_InpSts				0				2				int				0						0
+	
+//EDI_A
+	PM1_TBL_Home_Start				0				1				int				11						0					
+	PM1_TBL_ABS_Move				0				1				int				11						0
+	PM1_TBL_Inc_Start				0				1				int				11						0
+	PM1_TBL_Motor_Stop				0				1				int				10						0
+	PM1_TBL_Motor_EMG_Stop			0				1				int				10						0
+	PM1_TBL_Alarm_Reset				0				1				int				11						0
+	PM1_TBL_Servo					0				1				int				0						0
+	PM1_TBL_Move_Pos				0				1				double			0						0
+	PM1_TBL_Speed_Set				0				1				double			0						0
+	PM1_TBL_Acc_Set					0				1				double			0 						0
+	PM1_TBL_Motor_Alarm				0				2				int				0						0
+	PM1_TBL_Servo_Alarm				0				2				int				0						0
+	PM1_TBL_Run_Sts					0				2				int				0						0
+	PM1_TBL_Err_Code				0				2				int				0						0
+	PM1_TBL_Warning_Code			0				2				int				0						0
+	PM1_TBL_ServoRDY_Sts			0				2				int				0						0
+	PM1_TBL_INP_Sts					0				2				int				0						0
+	PM1_TBL_ZP_Sts					0				2				int				0						0
+	PM1_TBL_Current_Speed			0				2				double			0						0
+	PM1_TBL_Current_Pos2			0				2				double			0						0
+	PM1_TBL_ROT_TYPE				0				1				int				0						0
+	
+	
+//ETHERCAT
+	PM1_WaferChuck					0				1				int				0						0
+	PM1_WaferUnChuck				0				1				int				0						0
+	PM1_WaferChuckUnChuck			0				1				int				0						0
+	PM1_Nozzle1_Up					0				1				int				0						0
+	PM1_Nozzle1_Down				0				1				int				0						0
+	PM1_Nozzle1_UpDown				0				1				int				0						0
+	PM1_Nozzle2_Up					0				1				int				0						0
+	PM1_Nozzle2_Down				0				1				int				0						0
+	PM1_Nozzle2_UpDown				0				1				int				0						0
+	PM1_Gate_Open					0				1				int				0						0
+	PM1_Gate_Close					0				1				int				0						0
+	PM1_Gate_OpenClose				0				1				int				0						0
+	PM1_Nozzle1_Front_Valve			0				1				int				0						0
+	PM1_Nozzle1_Back_Valve			0				1				int				0						0
+	PM1_Nozzle2_Front_Valve			0				1				int				0						0
+	PM1_Nozzle2_Back_Valve			0				1				int				0						0
+	PM1_BACK_DIW_Valve				0				1				int				0						0
+	PM1_Front_DIW1_Valve			0				1				int				0						0
+	PM1_Front_DIW2_Valve			0				1				int				0						0
+	PM1_Cup_Drain_Valve				0				1				int				0						0
+	PM1_Nozzle1_Front_Flow			0				2				float			0						0
+	PM1_Nozzle1_Back_Flow			0				2				float			0						0
+	PM1_Nozzle2_Front_Flow			0				2				float			0						0
+	PM1_Nozzle2_Back_Flow			0				2				float			0						0
+	PM1_BackNozzle_DIW_Flow			0				2				float			0						0
+	PM1_Nozzle1_DIW_Flow			0				2				float			0						0
+	PM1_Nozzle2_DIW_Flow			0				2				float			0						0
+	PM1_Back_Asp_Flow				0				2				float			0						0
+	PM1_Labyrinth_Purge_Flow		0				2				float			0						0
+	PM1_Bearing_Purge_Flow			0				2				float			0						0
+	PM1_Cup_Exhaust1_Pressure		0				2				float			0						0
+	PM1_Cup_Exhaust2_Pressure		0				2				float			0						0
+	PM1_CHB_Exhaust_Pressure		0				2				float			0						0
+	PM1_MECHA_Exhaust_Pressure		0				2				float			0						0
+	PM1_Nozzle2_Temp				0				2				float			0						0
+	PM1_Asp_N2_Pressure				0				2				int				0						0
+	PM1_Gate_Openclose_Sts			0				2				int				0						0
+	PM1_Wafer_ChuckUnChuck_Sts		0				2				int				0						0
+	PM1_Wafer_Chuck_Sts				0				2				int				0						0
+	PM1_Wafer_UnChuck_Sts			0				2				int				0						0
+	PM1_DuckDrain_Leak_Sts			0				2				int				0						0
+	PM1_MechaRoom_Leak_Sts			0				2				int				0						0
+	PM1_ChbSide_Leak_Sts			0				2				int				0						0
+	PM1_Nozzle1_UpDown_Sts			0				2				int				0						0
+	PM1_Nozzle2_UpDown_Sts			0				2				int				0						0
+	PM1_Nozzle1_Up_Sts				0				2				int				0						0
+	PM1_Nozzle1_Down_Sts			0				2				int				0						0
+	PM1_Nozzle2_Up_Sts				0				2				int				0						0
+	PM1_Nozzle2_Down_Sts			0				2				int				0						0
+	PM1_CHB_1_3_5_7_EMO_Sts			0				2				int				0						0
+	PM1_Pcw_High_Alarm_Sts			0				2				int				0						0
+	PM1_Pcw_Low_Alarm_Sts			0				2				int				0						0
+	PM1_CUP1_Exhaust_Alarm_Sts		0				2				int				0						0
+	PM1_CUP2_Exhaust_Alarm_Sts		0				2				int				0						0
+	PM1_CHB_Exhaust_Alarm_Sts		0				2				int				0						0
+	PM1_MECHA_Exhaust_Alarm_Sts		0				2				int				0						0
+	PM1_CUP_Axis0TargetPosLower		0				1				int				0						0
+	PM1_CUP_Axis1TargetPosLower		0				1				int				0						0
+	PM1_CUP_Axis2TargetPosLower		0				1				int				0						0
+	PM1_CUP_Axis3TargetPosLower		0				1				int				0						0
+	PM1_CUP_Axis4TargetPosLower		0				1				int				0						0
+	PM1_CUP_Axis5TargetPosLower		0				1				int				0						0
+	PM1_CUP_Axis0Move				0				1				int				10						0
+	PM1_CUP_Axis1Move				0				1				int				10						0
+	PM1_CUP_Axis2Move				0				1				int				10						0
+	PM1_CUP_Axis3Move				0				1				int				10						0
+	PM1_CUP_Axis4Move				0				1				int				10						0
+	PM1_CUP_Axis5Move				0				1				int				10						0
+	PM1_CUP_Axis0Home				0				1				int				10						0
+	PM1_CUP_Axis1Home				0				1				int				10						0
+	PM1_CUP_Axis2Home				0				1				int				10						0
+	PM1_CUP_Axis3Home				0				1				int				10						0
+	PM1_CUP_Axis4Home				0				1				int				10						0	
+	PM1_CUP_Axis5Home				0				1				int				10						0
+	PM1_CUP_Axis0Reset				0				1				int				10						0
+	PM1_CUP_Axis1Reset				0				1				int				10						0
+	PM1_CUP_Axis2Reset				0				1				int				10						0
+	PM1_CUP_Axis3Reset				0				1				int				10						0
+	PM1_CUP_Axis4Reset				0				1				int				10						0
+	PM1_CUP_Axis5Reset				0				1				int				10						0
+	PM1_CUP_Axis0Servo				0				1				int				0						0
+	PM1_CUP_Axis1Servo				0				1				int				0						0
+	PM1_CUP_Axis2Servo				0				1				int				0						0
+	PM1_CUP_Axis3Servo				0				1				int				0						0
+	PM1_CUP_Axis4Servo				0				1				int				0						0
+	PM1_CUP_Axis5Servo				0				1				int				0						0
+	PM1_CUP_Axis0CurrentPosLower	0				2				int				0						0
+	PM1_CUP_Axis1CurrentPosLower	0				2				int				0						0
+	PM1_CUP_Axis2CurrentPosLower	0				2				int				0						0
+	PM1_CUP_Axis3CurrentPosLower	0				2				int				0						0
+	PM1_CUP_Axis4CurrentPosLower	0				2				int				0						0
+	PM1_CUP_Axis5CurrentPosLower	0				2				int				0						0
+	PM1_CUP_Axis0HomeCompleteSts	0				2				int				0						0
+	PM1_CUP_Axis1HomeCompleteSts	0				2				int				0						0
+	PM1_CUP_Axis2HomeCompleteSts	0				2				int				0						0
+	PM1_CUP_Axis3HomeCompleteSts	0				2				int				0						0
+	PM1_CUP_Axis4HomeCompleteSts	0				2				int				0						0
+	PM1_CUP_Axis5HomeCompleteSts	0				2				int				0						0
+	PM1_CUP_Axis0AlarmSts			0				2				int				0						0
+	PM1_CUP_Axis1AlarmSts			0				2				int				0						0
+	PM1_CUP_Axis2AlarmSts			0				2				int				0						0
+	PM1_CUP_Axis3AlarmSts			0				2				int				0						0
+	PM1_CUP_Axis4AlarmSts			0				2				int				0						0
+	PM1_CUP_Axis5AlarmSts			0				2				int				0						0
+	PM1_CUP_Axis0ServoSts			0				2				int				0						0
+	PM1_CUP_Axis1ServoSts			0				2				int				0						0
+	PM1_CUP_Axis2ServoSts			0				2				int				0						0
+	PM1_CUP_Axis3ServoSts			0				2				int				0						0
+	PM1_CUP_Axis4ServoSts			0				2				int				0						0
+	PM1_CUP_Axis5ServoSts			0				2				int				0						0
+	

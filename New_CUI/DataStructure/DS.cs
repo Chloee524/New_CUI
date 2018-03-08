@@ -12,7 +12,13 @@ namespace DataStructure
         private string port = string.Empty;
         private string dir = string.Empty;
         private Dictionary<int, string> ShortCmd = new Dictionary<int, string>();
+        private List<string> symbolList = new List<string>();
 
+        public List<string> Symbol
+        {
+            set { symbolList = value; }
+            get { return symbolList; }
+        }
         public String DIR
         {
             set { dir = value; }

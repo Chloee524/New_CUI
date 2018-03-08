@@ -26,7 +26,8 @@ namespace New_CUI
         private string ftpfileName = @"WinSCP.exe";
         private string logpath = string.Empty;
         private string logextension = ".log";
-        private int configcheck =-1;
+        private int configcheck = -1;
+        private int symbolcheck = -1;
         private bool logfileopen = false;
         private FileManager.LogFileWrite logfile = new FileManager.LogFileWrite();
         private static object syncRoot = new object();
@@ -53,9 +54,16 @@ namespace New_CUI
             button_3.Enabled = false;
             button_4.Enabled = false;
             button_5.Enabled = false;
+            button_SymbolSend.Enabled = false;
             radNormal.Checked = true;
 
-            //Read and check Config file
+            //Read and check Config file & Symbol file
+            InitConfig();
+            InitSymbol();
+        }
+
+        private void InitConfig()
+        {
             ConfigRead cf = new ConfigRead();
             cf.FilePath = Directory.GetCurrentDirectory();
             configcheck = cf.ConfigStart();
@@ -73,6 +81,23 @@ namespace New_CUI
             else Handler.LogMsg.AddNShow("[CUI] Config Read 중 Error 발생");
         }
 
+        private void InitSymbol()
+        {
+            SymbolRead sr = new SymbolRead();
+            sr.FilePath = Directory.GetCurrentDirectory();
+            symbolcheck = sr.SymbolStart();
+            if (symbolcheck == 0)
+            {
+                foreach (var data in _ds.Symbol)
+                    listBox_Symbol.Items.Add(data);
+                Handler.LogMsg.AddNShow("[CUI] Symbol 파일을 성공적으로 읽었습니다.");
+            }
+            else if (symbolcheck == -1) Handler.LogMsg.AddNShow("[CUI] Symbol 경로가 제대로 설정되지 않았습니다.");
+            else if (symbolcheck == -2) Handler.LogMsg.AddNShow("[CUI] Symbol 경로에 파일이 없습니다.");
+            else Handler.LogMsg.AddNShow("[CUI] Symbol Read 중 Error 발생");
+
+        }
+
         public void DispLog(string msg)
         {
             lock (syncRoot)
@@ -81,30 +106,28 @@ namespace New_CUI
                 {
                     this.Invoke(new MethodInvoker(delegate()
                     {
-                        if (listBoxLog.Items.Count >= 30 && listBoxLog.Items[0] != null)
-                            listBoxLog.Items.RemoveAt(0);
+                        if (textBox_log.Lines.Count() >= 30)
+                            textBox_log.Clear();
 
                         if (logfileopen) logfile.logfilewrite(msg);
 
                         ///TEM에서 [CMD]START, [CMD]STOP을 보낼 시
                         ///CUI에서 User가 START 또는 STOP을 누른 것 처럼 눌림.
                         CheckCmdfromTEM(msg);
-                        listBoxLog.TopIndex = listBoxLog.Items.Add(msg);
                     }
                     ));
 
                 }
                 else
                 {
-                    if (listBoxLog.Items.Count >= 30 && listBoxLog.Items[0] != null)
-                        listBoxLog.Items.RemoveAt(0);
+                    if (textBox_log.Lines.Count() >= 30)
+                        textBox_log.Clear();
 
                     if (logfileopen) logfile.logfilewrite(msg);
 
                     ///TEM에서 [CMD]START, [CMD]STOP을 보낼 시
                     ///CUI에서 User가 START 또는 STOP을 누른 것 처럼 눌림.
                     CheckCmdfromTEM(msg);
-                    listBoxLog.TopIndex = listBoxLog.Items.Add(msg);
                 }
             }
         }
@@ -154,6 +177,7 @@ namespace New_CUI
                     button_Connect.Enabled = false;
                     button_Discon.Enabled = true;
                     button_Send.Enabled = true;
+                    button_SymbolSend.Enabled = true;
                     button_INIT.Enabled = true;
                     button_1.Enabled = true;
                     button_2.Enabled = true;
@@ -307,6 +331,7 @@ namespace New_CUI
                 button_Connect.Enabled = true;
                 button_Discon.Enabled = false;
                 button_Send.Enabled = false;
+                button_SymbolSend.Enabled = false;
                 button_INIT.Enabled = false;
                 button_START.Enabled = false;
                 button_STOP.Enabled = false;
@@ -477,6 +502,16 @@ namespace New_CUI
             {
                 client.SendMessage(Command.cmd_tm_Fault);
             }
+        }
+
+        private void btn_SymbolSend_Click(object sender, EventArgs e)
+        {
+            string cmd = string.Empty;
+            cmd = textBox_SymParam.Text;
+            if (listBox_Symbol.SelectedItem != null && !string.IsNullOrEmpty(cmd))
+                client.SendMessage(listBox_Symbol.SelectedItem.ToString() + "[" + textBox_SymParam.Text + "]");
+            else if (listBox_Symbol.SelectedItem != null && string.IsNullOrEmpty(cmd))
+                client.SendMessage(listBox_Symbol.SelectedItem.ToString());
         }
     }
 }
