@@ -187,7 +187,7 @@
             this.panel1.Controls.Add(this.textBox_cmd);
             this.panel1.Controls.Add(this.button_Send);
             this.panel1.Controls.Add(this.label3);
-            this.panel1.Location = new System.Drawing.Point(1001, 572);
+            this.panel1.Location = new System.Drawing.Point(1110, 571);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(411, 130);
             this.panel1.TabIndex = 11;
@@ -231,7 +231,7 @@
             this.panel2.Controls.Add(this.label2);
             this.panel2.Controls.Add(this.button_START);
             this.panel2.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.panel2.Location = new System.Drawing.Point(1001, 12);
+            this.panel2.Location = new System.Drawing.Point(1109, 12);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(411, 285);
             this.panel2.TabIndex = 9;
@@ -350,14 +350,14 @@
             this.panel3.Controls.Add(this.label6);
             this.panel3.Location = new System.Drawing.Point(17, 12);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(701, 35);
+            this.panel3.Size = new System.Drawing.Size(810, 35);
             this.panel3.TabIndex = 12;
             // 
             // label6
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("맑은 고딕", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.label6.Location = new System.Drawing.Point(300, 5);
+            this.label6.Location = new System.Drawing.Point(346, 5);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(114, 25);
             this.label6.TabIndex = 13;
@@ -369,7 +369,7 @@
             this.panel4.Controls.Add(this.listBox_log);
             this.panel4.Location = new System.Drawing.Point(17, 47);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(701, 655);
+            this.panel4.Size = new System.Drawing.Size(810, 655);
             this.panel4.TabIndex = 14;
             // 
             // panel5
@@ -381,7 +381,7 @@
             this.panel5.Controls.Add(this.button_2);
             this.panel5.Controls.Add(this.button_1);
             this.panel5.Controls.Add(this.listBox_cmd);
-            this.panel5.Location = new System.Drawing.Point(1002, 312);
+            this.panel5.Location = new System.Drawing.Point(1109, 311);
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(411, 246);
             this.panel5.TabIndex = 15;
@@ -482,7 +482,7 @@
             // 
             this.panel6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel6.Controls.Add(this.label5);
-            this.panel6.Location = new System.Drawing.Point(724, 12);
+            this.panel6.Location = new System.Drawing.Point(833, 12);
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(270, 35);
             this.panel6.TabIndex = 16;
@@ -491,7 +491,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("맑은 고딕", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.label5.Location = new System.Drawing.Point(76, 5);
+            this.label5.Location = new System.Drawing.Point(78, 5);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(114, 25);
             this.label5.TabIndex = 13;
@@ -504,7 +504,7 @@
             this.panel7.Controls.Add(this.textBox_SymParam);
             this.panel7.Controls.Add(this.button_SymbolSend);
             this.panel7.Controls.Add(this.listBox_Symbol);
-            this.panel7.Location = new System.Drawing.Point(724, 47);
+            this.panel7.Location = new System.Drawing.Point(833, 47);
             this.panel7.Name = "panel7";
             this.panel7.Size = new System.Drawing.Size(270, 655);
             this.panel7.TabIndex = 17;
@@ -550,14 +550,14 @@
             this.listBox_log.ItemHeight = 21;
             this.listBox_log.Location = new System.Drawing.Point(-1, -1);
             this.listBox_log.Name = "listBox_log";
-            this.listBox_log.Size = new System.Drawing.Size(701, 655);
+            this.listBox_log.Size = new System.Drawing.Size(810, 655);
             this.listBox_log.TabIndex = 0;
             // 
             // NCUIForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1421, 723);
+            this.ClientSize = new System.Drawing.Size(1532, 723);
             this.Controls.Add(this.panel7);
             this.Controls.Add(this.panel6);
             this.Controls.Add(this.panel5);
