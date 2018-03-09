@@ -106,28 +106,30 @@ namespace New_CUI
                 {
                     this.Invoke(new MethodInvoker(delegate()
                     {
-                        if (textBox_log.Lines.Count() >= 30)
-                            textBox_log.Clear();
+                        if (listBox_log.Items.Count >= 30 && listBox_log.Items[0] != null)
+                            listBox_log.Items.RemoveAt(0);
 
                         if (logfileopen) logfile.logfilewrite(msg);
 
                         ///TEM에서 [CMD]START, [CMD]STOP을 보낼 시
                         ///CUI에서 User가 START 또는 STOP을 누른 것 처럼 눌림.
                         CheckCmdfromTEM(msg);
+                        listBox_log.TopIndex = listBox_log.Items.Add(msg);
                     }
                     ));
 
                 }
                 else
                 {
-                    if (textBox_log.Lines.Count() >= 30)
-                        textBox_log.Clear();
+                    if (listBox_log.Items.Count >= 30 && listBox_log.Items[0] != null)
+                        listBox_log.Items.RemoveAt(0);
 
                     if (logfileopen) logfile.logfilewrite(msg);
 
                     ///TEM에서 [CMD]START, [CMD]STOP을 보낼 시
                     ///CUI에서 User가 START 또는 STOP을 누른 것 처럼 눌림.
                     CheckCmdfromTEM(msg);
+                    listBox_log.TopIndex = listBox_log.Items.Add(msg);
                 }
             }
         }
@@ -512,6 +514,12 @@ namespace New_CUI
                 client.SendMessage(listBox_Symbol.SelectedItem.ToString() + "[" + textBox_SymParam.Text + "]");
             else if (listBox_Symbol.SelectedItem != null && string.IsNullOrEmpty(cmd))
                 client.SendMessage(listBox_Symbol.SelectedItem.ToString());
+        }
+
+        private void button_SymbolSend_EnabledChanged(object sender, EventArgs e)
+        {
+            if (button_SymbolSend.Enabled) button_SymbolSend.BackColor = Color.MediumAquamarine;
+            else button_SymbolSend.BackColor = SystemColors.InactiveCaption;
         }
     }
 }
