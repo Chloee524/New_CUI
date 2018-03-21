@@ -58,6 +58,7 @@
             this.panel3 = new System.Windows.Forms.Panel();
             this.label6 = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.listBox_log = new System.Windows.Forms.ListBox();
             this.panel5 = new System.Windows.Forms.Panel();
             this.button_5 = new System.Windows.Forms.Button();
             this.button_4 = new System.Windows.Forms.Button();
@@ -69,10 +70,9 @@
             this.panel6 = new System.Windows.Forms.Panel();
             this.label5 = new System.Windows.Forms.Label();
             this.panel7 = new System.Windows.Forms.Panel();
-            this.label7 = new System.Windows.Forms.Label();
-            this.textBox_SymParam = new System.Windows.Forms.TextBox();
+            this.dataGridView_param = new System.Windows.Forms.DataGridView();
             this.button_SymbolSend = new System.Windows.Forms.Button();
-            this.listBox_log = new System.Windows.Forms.ListBox();
+            this.button_delete = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.statusStrip.SuspendLayout();
@@ -81,6 +81,7 @@
             this.panel5.SuspendLayout();
             this.panel6.SuspendLayout();
             this.panel7.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_param)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -187,7 +188,7 @@
             this.panel1.Controls.Add(this.textBox_cmd);
             this.panel1.Controls.Add(this.button_Send);
             this.panel1.Controls.Add(this.label3);
-            this.panel1.Location = new System.Drawing.Point(1110, 571);
+            this.panel1.Location = new System.Drawing.Point(829, 564);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(411, 130);
             this.panel1.TabIndex = 11;
@@ -231,7 +232,7 @@
             this.panel2.Controls.Add(this.label2);
             this.panel2.Controls.Add(this.button_START);
             this.panel2.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.panel2.Location = new System.Drawing.Point(1109, 12);
+            this.panel2.Location = new System.Drawing.Point(828, 12);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(411, 285);
             this.panel2.TabIndex = 9;
@@ -348,7 +349,7 @@
             // 
             this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel3.Controls.Add(this.label6);
-            this.panel3.Location = new System.Drawing.Point(17, 12);
+            this.panel3.Location = new System.Drawing.Point(12, 489);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(810, 35);
             this.panel3.TabIndex = 12;
@@ -367,10 +368,20 @@
             // 
             this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel4.Controls.Add(this.listBox_log);
-            this.panel4.Location = new System.Drawing.Point(17, 47);
+            this.panel4.Location = new System.Drawing.Point(12, 524);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(810, 655);
+            this.panel4.Size = new System.Drawing.Size(810, 170);
             this.panel4.TabIndex = 14;
+            // 
+            // listBox_log
+            // 
+            this.listBox_log.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.listBox_log.FormattingEnabled = true;
+            this.listBox_log.ItemHeight = 21;
+            this.listBox_log.Location = new System.Drawing.Point(-1, -1);
+            this.listBox_log.Name = "listBox_log";
+            this.listBox_log.Size = new System.Drawing.Size(810, 172);
+            this.listBox_log.TabIndex = 0;
             // 
             // panel5
             // 
@@ -381,7 +392,7 @@
             this.panel5.Controls.Add(this.button_2);
             this.panel5.Controls.Add(this.button_1);
             this.panel5.Controls.Add(this.listBox_cmd);
-            this.panel5.Location = new System.Drawing.Point(1109, 311);
+            this.panel5.Location = new System.Drawing.Point(828, 307);
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(411, 246);
             this.panel5.TabIndex = 15;
@@ -475,23 +486,24 @@
             this.listBox_Symbol.Location = new System.Drawing.Point(-1, -2);
             this.listBox_Symbol.Name = "listBox_Symbol";
             this.listBox_Symbol.ScrollAlwaysVisible = true;
-            this.listBox_Symbol.Size = new System.Drawing.Size(270, 524);
+            this.listBox_Symbol.Size = new System.Drawing.Size(270, 424);
             this.listBox_Symbol.TabIndex = 16;
+            this.listBox_Symbol.DoubleClick += new System.EventHandler(this.listBox_Symbol_DoubleClick);
             // 
             // panel6
             // 
             this.panel6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel6.Controls.Add(this.label5);
-            this.panel6.Location = new System.Drawing.Point(833, 12);
+            this.panel6.Location = new System.Drawing.Point(12, 12);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(270, 35);
+            this.panel6.Size = new System.Drawing.Size(810, 35);
             this.panel6.TabIndex = 16;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("맑은 고딕", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.label5.Location = new System.Drawing.Point(78, 5);
+            this.label5.Location = new System.Drawing.Point(346, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(114, 25);
             this.label5.TabIndex = 13;
@@ -500,64 +512,57 @@
             // panel7
             // 
             this.panel7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel7.Controls.Add(this.label7);
-            this.panel7.Controls.Add(this.textBox_SymParam);
+            this.panel7.Controls.Add(this.button_delete);
+            this.panel7.Controls.Add(this.dataGridView_param);
             this.panel7.Controls.Add(this.button_SymbolSend);
             this.panel7.Controls.Add(this.listBox_Symbol);
-            this.panel7.Location = new System.Drawing.Point(833, 47);
+            this.panel7.Location = new System.Drawing.Point(12, 47);
             this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(270, 655);
+            this.panel7.Size = new System.Drawing.Size(810, 425);
             this.panel7.TabIndex = 17;
             // 
-            // label7
+            // dataGridView_param
             // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("맑은 고딕", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.label7.Location = new System.Drawing.Point(81, 523);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(115, 30);
-            this.label7.TabIndex = 19;
-            this.label7.Text = "Parameter";
-            // 
-            // textBox_SymParam
-            // 
-            this.textBox_SymParam.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox_SymParam.Font = new System.Drawing.Font("맑은 고딕", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.textBox_SymParam.Location = new System.Drawing.Point(15, 559);
-            this.textBox_SymParam.Name = "textBox_SymParam";
-            this.textBox_SymParam.Size = new System.Drawing.Size(242, 33);
-            this.textBox_SymParam.TabIndex = 18;
-            this.textBox_SymParam.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.dataGridView_param.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView_param.Location = new System.Drawing.Point(273, 5);
+            this.dataGridView_param.Name = "dataGridView_param";
+            this.dataGridView_param.RowTemplate.Height = 23;
+            this.dataGridView_param.Size = new System.Drawing.Size(530, 363);
+            this.dataGridView_param.TabIndex = 20;
             // 
             // button_SymbolSend
             // 
             this.button_SymbolSend.BackColor = System.Drawing.Color.MediumAquamarine;
             this.button_SymbolSend.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_SymbolSend.Font = new System.Drawing.Font("맑은 고딕", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.button_SymbolSend.Location = new System.Drawing.Point(16, 598);
+            this.button_SymbolSend.Location = new System.Drawing.Point(449, 374);
             this.button_SymbolSend.Name = "button_SymbolSend";
-            this.button_SymbolSend.Size = new System.Drawing.Size(242, 45);
+            this.button_SymbolSend.Size = new System.Drawing.Size(354, 45);
             this.button_SymbolSend.TabIndex = 17;
             this.button_SymbolSend.Text = "SEND";
             this.button_SymbolSend.UseVisualStyleBackColor = false;
             this.button_SymbolSend.EnabledChanged += new System.EventHandler(this.button_SymbolSend_EnabledChanged);
             this.button_SymbolSend.Click += new System.EventHandler(this.btn_SymbolSend_Click);
             // 
-            // listBox_log
+            // button_delete
             // 
-            this.listBox_log.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.listBox_log.FormattingEnabled = true;
-            this.listBox_log.ItemHeight = 21;
-            this.listBox_log.Location = new System.Drawing.Point(-1, -1);
-            this.listBox_log.Name = "listBox_log";
-            this.listBox_log.Size = new System.Drawing.Size(810, 655);
-            this.listBox_log.TabIndex = 0;
+            this.button_delete.BackColor = System.Drawing.Color.MediumAquamarine;
+            this.button_delete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_delete.Font = new System.Drawing.Font("맑은 고딕", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.button_delete.Location = new System.Drawing.Point(275, 374);
+            this.button_delete.Name = "button_delete";
+            this.button_delete.Size = new System.Drawing.Size(168, 45);
+            this.button_delete.TabIndex = 21;
+            this.button_delete.Text = "Del";
+            this.button_delete.UseVisualStyleBackColor = false;
+            this.button_delete.EnabledChanged += new System.EventHandler(this.btn_delete_EnabledChanged);
+            this.button_delete.Click += new System.EventHandler(this.btn_delete_Click);
             // 
             // NCUIForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1532, 723);
+            this.ClientSize = new System.Drawing.Size(1253, 707);
             this.Controls.Add(this.panel7);
             this.Controls.Add(this.panel6);
             this.Controls.Add(this.panel5);
@@ -580,7 +585,7 @@
             this.panel6.ResumeLayout(false);
             this.panel6.PerformLayout();
             this.panel7.ResumeLayout(false);
-            this.panel7.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_param)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -622,10 +627,10 @@
         private System.Windows.Forms.Panel panel6;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Panel panel7;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.TextBox textBox_SymParam;
         private System.Windows.Forms.Button button_SymbolSend;
         private System.Windows.Forms.ListBox listBox_log;
+        private System.Windows.Forms.DataGridView dataGridView_param;
+        private System.Windows.Forms.Button button_delete;
 
     }
 }

@@ -29,6 +29,7 @@ namespace New_CUI
         private int configcheck = -1;
         private int symbolcheck = -1;
         private bool logfileopen = false;
+        private List<string> list_symbol = new List<string>();
         private FileManager.LogFileWrite logfile = new FileManager.LogFileWrite();
         private static object syncRoot = new object();
 
@@ -60,6 +61,7 @@ namespace New_CUI
             //Read and check Config file & Symbol file
             InitConfig();
             InitSymbol();
+            InitGridView();
         }
 
         private void InitConfig()
@@ -98,6 +100,17 @@ namespace New_CUI
 
         }
 
+        private void InitGridView()
+        {
+            list_symbol = new List<string>();
+
+            dataGridView_param.Rows.Clear();
+            dataGridView_param.ColumnCount = 2;
+            dataGridView_param.Columns[0].Width = 180;
+            dataGridView_param.Columns[1].Width = 300;
+
+        }
+
         public void DispLog(string msg)
         {
             lock (syncRoot)
@@ -106,7 +119,7 @@ namespace New_CUI
                 {
                     this.Invoke(new MethodInvoker(delegate()
                     {
-                        if (listBox_log.Items.Count >= 30 && listBox_log.Items[0] != null)
+                        if (listBox_log.Items.Count >= 10 && listBox_log.Items[0] != null)
                             listBox_log.Items.RemoveAt(0);
 
                         if (logfileopen) logfile.logfilewrite(msg);
@@ -121,7 +134,7 @@ namespace New_CUI
                 }
                 else
                 {
-                    if (listBox_log.Items.Count >= 30 && listBox_log.Items[0] != null)
+                    if (listBox_log.Items.Count >= 10 && listBox_log.Items[0] != null)
                         listBox_log.Items.RemoveAt(0);
 
                     if (logfileopen) logfile.logfilewrite(msg);
@@ -509,11 +522,26 @@ namespace New_CUI
         private void btn_SymbolSend_Click(object sender, EventArgs e)
         {
             string cmd = string.Empty;
-            cmd = textBox_SymParam.Text;
-            if (listBox_Symbol.SelectedItem != null && !string.IsNullOrEmpty(cmd))
-                client.SendMessage(listBox_Symbol.SelectedItem.ToString() + "[" + textBox_SymParam.Text + "]");
-            else if (listBox_Symbol.SelectedItem != null && string.IsNullOrEmpty(cmd))
-                client.SendMessage(listBox_Symbol.SelectedItem.ToString());
+
+            List<string> list = new List<string>();
+
+            for (int j = 0; j < dataGridView_param.RowCount-1; j++)
+            {
+
+                string symbol = dataGridView_param[0,j].Value.ToString();
+                string param = dataGridView_param[1, j].Value.ToString();
+
+                if (string.IsNullOrEmpty(param)) 
+                    cmd = symbol;
+                else
+                    cmd = symbol + "[" + param + "]";
+                list.Add(cmd);
+            }
+
+            foreach (string eachcmd in list)
+            {
+                client.SendMessage(eachcmd);
+            }
         }
 
         private void button_SymbolSend_EnabledChanged(object sender, EventArgs e)
@@ -521,5 +549,40 @@ namespace New_CUI
             if (button_SymbolSend.Enabled) button_SymbolSend.BackColor = Color.MediumAquamarine;
             else button_SymbolSend.BackColor = SystemColors.InactiveCaption;
         }
+
+        private void listBox_Symbol_DoubleClick(object sender, EventArgs e)
+        {
+            string selected = listBox_Symbol.SelectedItem.ToString();
+
+            if (list_symbol.Contains(selected))
+                return;
+
+            list_symbol.Add(selected);
+            dataGridView_param.Rows.Add(selected, string.Empty);
+        }
+
+        private void btn_delete_Click(object sender, EventArgs e)
+        {
+            if (dataGridView_param.SelectedRows.Count != 0)
+            {
+                foreach (DataGridViewRow item in dataGridView_param.SelectedRows)
+                {
+                    dataGridView_param.Rows.Remove(item);
+                }
+            }
+            else if (dataGridView_param.SelectedCells.Count != 0)
+            {
+                int index = dataGridView_param.CurrentCell.RowIndex;
+                if(dataGridView_param.Rows.Count > 1)
+                    dataGridView_param.Rows.Remove(dataGridView_param.Rows[index]);
+            }
+        }
+
+        private void btn_delete_EnabledChanged(object sender, EventArgs e)
+        {
+            if (button_delete.Enabled) button_delete.BackColor = Color.MediumAquamarine;
+            else button_delete.BackColor = SystemColors.InactiveCaption;
+        }
+
     }
 }

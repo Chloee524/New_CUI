@@ -301,9 +301,7 @@ namespace socket
                 // 예외가 발생하면 예외 정보 출력 후 함수를 종료한다.
                 Handler.LogMsg.AddNShow("[CUI] Send Error: " + ex.Message);
                 return;
-            }
-
-            
+            } 
         }
     }
 }
