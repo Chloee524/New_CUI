@@ -239,8 +239,6 @@ namespace socket
                 // 자료를 수신하고, 수신받은 바이트를 가져옵니다.
                 recvBytes = co.socket.EndReceive(ar);
 
-
-                
                 // 수신받은 자료의 크기가 1 이상일 때에만 자료 처리
                 if (recvBytes > 0)
                 {
@@ -271,9 +269,6 @@ namespace socket
             }
         }
         
-
-        
-
         private void HandleDataSend(IAsyncResult ar)
         {
             // 넘겨진 추가 정보를 가져옵니다.
