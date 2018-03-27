@@ -306,6 +306,7 @@ namespace socket
             {
                 Handler.LogMsg.AddNShow("[CUI] Disconnection Error: " + e.Message);
             }
+
             return IsDisconnected;
         }
 

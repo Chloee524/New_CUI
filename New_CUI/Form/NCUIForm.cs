@@ -182,44 +182,6 @@ namespace New_CUI
             toolStripStatusLabel.Text = "TEM STOP 전송";
         }
 
-        private void button_STOP_Click(object sender, EventArgs e)
-        {
-            bool isSuccess = false;
-            isSuccess      = _client.SendMessage(Command.CmdStop);
-
-            if (isSuccess)
-            {
-                DoSTOP();
-            }
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            Process ps = new Process();
-
-            try
-            {
-                ps.StartInfo.FileName         = _ftpfileName;
-                ps.StartInfo.WorkingDirectory = Directory.GetCurrentDirectory();
-                ps.Start();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-        }
-
-        private void btn_INIT_Click(object sender, EventArgs e)
-        {
-            bool isSuccess = false;
-            isSuccess      = _client.SendMessage(Command.CmdInit);
-
-            if (isSuccess)
-            {
-                DoINIT();
-            }
-        }
-
         private void DoINIT()
         {
             button_INIT.Enabled       = false;
@@ -264,6 +226,30 @@ namespace New_CUI
 
             return rtn;
         }
+
+        private void ChangeButtonColor(Button button)
+        {
+            if (button.Enabled)
+                button.BackColor = Color.MediumAquamarine;
+            else
+                button.BackColor = SystemColors.InactiveCaption;
+        }
+
+        private void SendCommand(int cmdNum)
+        {
+            bool isSuccess = false;
+            string cmd = string.Empty;
+
+            try
+            {
+                _ds.Cmd.TryGetValue(cmdNum, out cmd);
+                isSuccess = _client.SendMessage(cmd);
+            }
+            catch (Exception ex)
+            {
+                Handler.LogMsg.AddNShow("[CUI] Send Error : " + ex.Message);
+            }
+        }
         #endregion Private Member Functions
 
         #region Public Member Functions
@@ -273,7 +259,7 @@ namespace New_CUI
             {
                 if (this.InvokeRequired)
                 {
-                    this.Invoke(new MethodInvoker(delegate()
+                    this.BeginInvoke(new MethodInvoker(delegate()
                     {
                         if (listBox_log.Items.Count >= 10 && listBox_log.Items[0] != null)
                             listBox_log.Items.RemoveAt(0);
@@ -305,44 +291,72 @@ namespace New_CUI
         #endregion Public Member Functions
 
         #region Windows Component Events
-        private void button_Connect_EnabledChanged(object sender, EventArgs e)
+        private void button_STOP_Click(object sender, EventArgs e)
         {
-            if (button_Connect.Enabled) 
-                button_Connect.BackColor = Color.MediumAquamarine;
-            else 
-                button_Connect.BackColor = SystemColors.InactiveCaption;
+            bool isSuccess = false;
+            isSuccess = _client.SendMessage(Command.CmdStop);
+
+            if (isSuccess)
+            {
+                DoSTOP();
+            }
         }
 
-        private void button_START_EnabledChanged(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e)
         {
-            if (button_START.Enabled) 
-                button_START.BackColor = Color.MediumAquamarine;
-            else 
-                button_START.BackColor = SystemColors.InactiveCaption;
+            Process ps = new Process();
+
+            try
+            {
+                ps.StartInfo.FileName = _ftpfileName;
+                ps.StartInfo.WorkingDirectory = Directory.GetCurrentDirectory();
+                ps.Start();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
 
-        private void button_INIT_EnabledChanged(object sender, EventArgs e)
+        private void btn_INIT_Click(object sender, EventArgs e)
         {
-            if (button_INIT.Enabled) 
-                button_INIT.BackColor = Color.MediumAquamarine;
-            else 
-                button_INIT.BackColor = SystemColors.InactiveCaption;
+            bool isSuccess = false;
+            isSuccess = _client.SendMessage(Command.CmdInit);
+
+            if (isSuccess)
+            {
+                DoINIT();
+            }
         }
 
-        private void button_STOP_EnabledChanged(object sender, EventArgs e)
+        private void button_Connect_Click(object sender, EventArgs e)
         {
-            if (button_STOP.Enabled) 
-                button_STOP.BackColor = Color.MediumAquamarine;
-            else 
-                button_STOP.BackColor = SystemColors.InactiveCaption;
-        }
+            bool isSuccess = false;
 
-        private void button_Send_EnabledChanged(object sender, EventArgs e)
-        {
-            if (button_Send.Enabled) 
-                button_Send.BackColor = Color.MediumAquamarine;
-            else 
-                button_Send.BackColor = SystemColors.InactiveCaption;
+            if (string.IsNullOrEmpty(ipAddressControl1.Text) || string.IsNullOrEmpty(textBox_Port.Text))
+            {
+                toolStripStatusLabel.Text = "IP 주소 및 Port 번호를 확인 해 주세요.";
+            }
+            else
+            {
+                isSuccess = _client.Connect(ipAddressControl1.Text, int.Parse(textBox_Port.Text));
+
+                if (isSuccess)
+                {
+                    button_Connect.Enabled = false;
+                    button_Discon.Enabled = true;
+                    button_Send.Enabled = true;
+                    button_SymbolSend.Enabled = true;
+                    button_INIT.Enabled = true;
+                    button_1.Enabled = true;
+                    button_2.Enabled = true;
+                    button_3.Enabled = true;
+                    button_4.Enabled = true;
+                    button_5.Enabled = true;
+                    toolStripStatusLabel.Text = "IP 주소 : " + ipAddressControl1.Text +
+                        " 포트 번호 : " + textBox_Port.Text + "로 연결 완료";
+                }
+            }
         }
 
         private void button_Discon_Click(object sender, EventArgs e)
@@ -369,132 +383,94 @@ namespace New_CUI
             }
         }
 
+        private void button_Connect_EnabledChanged(object sender, EventArgs e)
+        {
+            ChangeButtonColor((Button)sender);
+        }
+
+        private void button_START_EnabledChanged(object sender, EventArgs e)
+        {
+            ChangeButtonColor((Button)sender);
+        }
+
+        private void button_INIT_EnabledChanged(object sender, EventArgs e)
+        {
+            ChangeButtonColor((Button)sender);
+        }
+
+        private void button_STOP_EnabledChanged(object sender, EventArgs e)
+        {
+            ChangeButtonColor((Button)sender);
+        }
+
+        private void button_Send_EnabledChanged(object sender, EventArgs e)
+        {
+            ChangeButtonColor((Button)sender);
+        }
+
         private void button_Discon_EnabledChanged(object sender, EventArgs e)
         {
-            if (button_Discon.Enabled) 
-                button_Discon.BackColor = Color.MediumAquamarine;
-            else 
-                button_Discon.BackColor = SystemColors.InactiveCaption;
+            ChangeButtonColor((Button)sender);
         }
 
         private void button_1_EnabledChanged(object sender, EventArgs e)
         {
-            if (button_1.Enabled) 
-                button_1.BackColor = Color.MediumAquamarine;
-            else 
-                button_1.BackColor = SystemColors.InactiveCaption;
+            ChangeButtonColor((Button)sender);
         }
 
         private void button_2_EnabledChanged(object sender, EventArgs e)
         {
-            if (button_2.Enabled) 
-                button_2.BackColor = Color.MediumAquamarine;
-            else 
-                button_2.BackColor = SystemColors.InactiveCaption;
+            ChangeButtonColor((Button)sender);
         }
 
         private void button_3_EnabledChanged(object sender, EventArgs e)
         {
-            if (button_3.Enabled) 
-                button_3.BackColor = Color.MediumAquamarine;
-            else 
-                button_3.BackColor = SystemColors.InactiveCaption;
+            ChangeButtonColor((Button)sender);
         }
 
         private void button_4_EnabledChanged(object sender, EventArgs e)
         {
-            if (button_4.Enabled) 
-                button_4.BackColor = Color.MediumAquamarine;
-            else 
-                button_4.BackColor = SystemColors.InactiveCaption;
+            ChangeButtonColor((Button)sender);
         }
 
         private void button_5_EnabledChanged(object sender, EventArgs e)
         {
-            if (button_5.Enabled) 
-                button_5.BackColor = Color.MediumAquamarine;
-            else 
-                button_5.BackColor = SystemColors.InactiveCaption;
+            ChangeButtonColor((Button)sender);
+        }
+
+        private void button_SymbolSend_EnabledChanged(object sender, EventArgs e)
+        {
+            ChangeButtonColor((Button)sender);
+        }
+
+        private void btn_delete_EnabledChanged(object sender, EventArgs e)
+        {
+            ChangeButtonColor((Button)sender);
         }
 
         private void button_1_Click(object sender, EventArgs e)
         {
-            bool isSuccess = false;
-            string cmd     = string.Empty;
-
-            try
-            {
-                _ds.Cmd.TryGetValue(1, out cmd);
-                isSuccess = _client.SendMessage(cmd);
-            }
-            catch (Exception ex)
-            {
-                Handler.LogMsg.AddNShow("[CUI] Send Error : " + ex.Message);
-            }
+            SendCommand(1);
         }
 
         private void button_2_Click(object sender, EventArgs e)
         {
-            bool isSuccess = false;
-            string cmd     = string.Empty;
-
-            try
-            {
-                _ds.Cmd.TryGetValue(2, out cmd);
-                isSuccess = _client.SendMessage(cmd);
-            }
-            catch (Exception ex)
-            {
-                Handler.LogMsg.AddNShow("[CUI] Send Error : " + ex.Message);
-            }
+            SendCommand(2);
         }
 
         private void button_3_Click(object sender, EventArgs e)
         {
-            bool isSuccess = false;
-            string cmd     = string.Empty;
-
-            try
-            {
-                _ds.Cmd.TryGetValue(3, out cmd);
-                isSuccess = _client.SendMessage(cmd);
-            }
-            catch (Exception ex)
-            {
-                Handler.LogMsg.AddNShow("[CUI] Send Error : " + ex.Message);
-            }
+            SendCommand(3);
         }
 
         private void button_4_Click(object sender, EventArgs e)
         {
-            bool isSuccess = false;
-            string cmd     = string.Empty;
-
-            try
-            {
-                _ds.Cmd.TryGetValue(4, out cmd);
-                isSuccess = _client.SendMessage(cmd);
-            }
-            catch (Exception ex)
-            {
-                Handler.LogMsg.AddNShow("[CUI] Send Error : " + ex.Message);
-            }
+            SendCommand(4);
         }
 
         private void button_5_Click(object sender, EventArgs e)
         {
-            bool isSuccess = false;
-            string cmd     = string.Empty;
-
-            try
-            {
-                _ds.Cmd.TryGetValue(5, out cmd);
-                isSuccess = _client.SendMessage(cmd);
-            }
-            catch (Exception ex)
-            {
-                Handler.LogMsg.AddNShow("[CUI] Send Error : " + ex.Message);
-            }
+            SendCommand(5);
         }
 
         private void button_Send_Click(object sender, EventArgs e)
@@ -517,36 +493,6 @@ namespace New_CUI
             catch (Exception ex)
             {
                 Handler.LogMsg.AddNShow("[CUI] Send Error : " + ex.Message);
-            }
-        }
-
-        private void button_Connect_Click(object sender, EventArgs e)
-        {
-            bool isSuccess = false;
-
-            if (string.IsNullOrEmpty(ipAddressControl1.Text) || string.IsNullOrEmpty(textBox_Port.Text))
-            {
-                toolStripStatusLabel.Text = "IP 주소 및 Port 번호를 확인 해 주세요.";
-            }
-            else
-            {
-                isSuccess = _client.Connect(ipAddressControl1.Text, int.Parse(textBox_Port.Text));
-
-                if (isSuccess)
-                {
-                    button_Connect.Enabled    = false;
-                    button_Discon.Enabled     = true;
-                    button_Send.Enabled       = true;
-                    button_SymbolSend.Enabled = true;
-                    button_INIT.Enabled       = true;
-                    button_1.Enabled          = true;
-                    button_2.Enabled          = true;
-                    button_3.Enabled          = true;
-                    button_4.Enabled          = true;
-                    button_5.Enabled          = true;
-                    toolStripStatusLabel.Text = "IP 주소 : " + ipAddressControl1.Text +
-                        " 포트 번호 : " + textBox_Port.Text + "로 연결 완료";
-                }
             }
         }
 
@@ -591,14 +537,6 @@ namespace New_CUI
             }
         }
 
-        private void button_SymbolSend_EnabledChanged(object sender, EventArgs e)
-        {
-            if (button_SymbolSend.Enabled) 
-                button_SymbolSend.BackColor = Color.MediumAquamarine;
-            else 
-                button_SymbolSend.BackColor = SystemColors.InactiveCaption;
-        }
-
         private void listBox_Symbol_DoubleClick(object sender, EventArgs e)
         {
             string selected = listBox_Symbol.SelectedItem.ToString();
@@ -625,14 +563,6 @@ namespace New_CUI
                 if (dataGridView_param.Rows.Count > 1)
                     dataGridView_param.Rows.Remove(dataGridView_param.Rows[index]);
             }
-        }
-
-        private void btn_delete_EnabledChanged(object sender, EventArgs e)
-        {
-            if (button_delete.Enabled) 
-                button_delete.BackColor = Color.MediumAquamarine;
-            else 
-                button_delete.BackColor = SystemColors.InactiveCaption;
         }
 
         private void button_START_Click(object sender, EventArgs e)

@@ -133,7 +133,7 @@ namespace Library
                 if (_display == null)
                     return;
 
-                lock (_errorMessage)
+                lock (syncLock)
                 {
                     foreach (var msg in _errorMessage)
                     {
@@ -202,7 +202,7 @@ namespace Library
         /// </summary>
         public void Debug()
         {
-            lock (_errorMessage)
+            lock (syncLock)
             {
 
                 StackTrace st = new StackTrace(true);
@@ -240,7 +240,7 @@ namespace Library
         /// </summary>
         public void RemoveAll()
         {
-            lock (_errorMessage)
+            lock (syncLock)
             {
                 _errorMessage.RemoveRange(0, _errorMessage.Count);
             }
@@ -248,7 +248,7 @@ namespace Library
 
         public void Removeat(int indexed, int countno)
         {
-            lock (_errorMessage)
+            lock (syncLock)
             {
                 _errorMessage.RemoveRange(indexed, countno);
             }
