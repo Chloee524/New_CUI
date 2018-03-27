@@ -123,7 +123,6 @@ namespace Library
         #endregion  // PROTECTED
 
         #region PUBLIC
-
         /// <summary>
         /// 오류 메시지를 출력한다.
         /// </summary>
@@ -162,7 +161,6 @@ namespace Library
                 RemoveAll();
             }
         }
-
         /// <summary>
         /// 오류 메시지 출력에서 보여질 시간 표기 방법을 입력한다.
         /// </summary>
@@ -199,7 +197,6 @@ namespace Library
             Add(msg, ex);
             ShowReport();
         }
-
         /// <summary>
         /// 저장된 Exception 정보를 디버깅 한다.
         /// </summary>
@@ -238,7 +235,6 @@ namespace Library
                 RemoveAll();
             }
         }
-
         /// <summary>
         /// 저장된 모든 오류 메시지를 삭제한다.
         /// </summary>

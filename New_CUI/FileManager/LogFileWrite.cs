@@ -10,65 +10,78 @@ namespace New_CUI.FileManager
 {
     class LogFileWrite
     {
-        private readonly Int32 buffersize = 64000;
-        private readonly Int32 marginsize = 100;
+        #region Private Member Variables
+        private bool             _isSuccess = false;
+        private string           _filepath  = string.Empty;
+        private string           _buffer;
+        private string           _margin;
+        private StreamWriter     _sw        = null;
+        private DataStructure.DS _ds        = null;
+        #endregion Private Member Variables
 
-        private DataStructure.DS _ds = null;
-        private string filepath = string.Empty;
-        private StreamWriter sw = null;
-        private string buffer;
-        private string margin;
-        private bool IsSuccess = false;
+        #region Constants
+        private readonly Int32 Buffersize = 64000;
+        private readonly Int32 Marginsize = 100;
+        #endregion Constants
 
+        #region Properties
         public String FilePath
         {
-            get { return filepath; }
-            set { filepath = value; }
+            get { return _filepath; }
+            set { _filepath = value; }
         }
+        #endregion Properties
 
+        #region Constants
         public LogFileWrite()
         {
             _ds = DS.Instance;
         }
+        #endregion Constants
 
-        public bool logfileopen()
+        #region Public Member Functions
+        public bool OpenLogFile()
         {
-            sw = new StreamWriter(filepath, true, System.Text.UTF8Encoding.UTF8);
-            buffer = string.Empty;
-            IsSuccess = true;
+            _sw        = new StreamWriter(_filepath, true, System.Text.UTF8Encoding.UTF8);
+            _buffer    = string.Empty;
+            _isSuccess = true;
             
-            return IsSuccess;
+            return _isSuccess;
         }
 
-        public void logfilewrite(string msg)
+        public void WriteLogFile(string msg)
         {
-            if(!IsSuccess) return;
+            if(!_isSuccess) 
+                return;
 
-            if (buffer.Length + msg.Length+1 >= buffersize)
+            if (_buffer.Length + msg.Length+1 >= Buffersize)
             {
-                sw.Write(buffer);
-                buffer = string.Empty;
-                buffer = msg;
+                _sw.Write(_buffer);
+                _buffer = string.Empty;
+                _buffer = msg;
             }
             else
             {
-                buffer = buffer + msg;
+                _buffer = _buffer + msg;
             }
         }
 
-        public void logfileclose()
+        public void CloseLogFile()
         {
             // 남아있는 buffer 사이즈 확인 후, length가 0보다 이상이면
             // 오픈한 로그 파일에 저장을 하고,
             // 파일을 클로즈 한다.
-            if (!IsSuccess) return;
+            if (!_isSuccess) 
+                return;
 
-            if (buffer.Length > 0)
+            if (_buffer.Length > 0)
             {
-                sw.Write(buffer);
+                _sw.Write(_buffer);
             }
-            sw.Close();
-            IsSuccess = false;
+
+            _sw.Close();
+            _isSuccess = false;
         }
+        #endregion Public Member Functions
     }
 }

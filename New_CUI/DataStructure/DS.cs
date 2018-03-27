@@ -7,37 +7,43 @@ namespace DataStructure
 {
     public class DS
     {
+        #region Singleton
         private static DS _instance = null;
-        private string ipaddr = string.Empty;
-        private string port = string.Empty;
-        private string dir = string.Empty;
-        private Dictionary<int, string> ShortCmd = new Dictionary<int, string>();
-        private List<string> symbolList = new List<string>();
+        #endregion Singleton
 
+        #region Private Member Variables
+        private string                  _ipaddr     = string.Empty;
+        private string                  _port       = string.Empty;
+        private string                  _dir        = string.Empty;
+        private List<string>            _symbolList = new List<string>();
+        private Dictionary<int, string> _shortCmd   = new Dictionary<int, string>();
+        #endregion Private Member Variables
+
+        #region Properties
         public List<string> Symbol
         {
-            set { symbolList = value; }
-            get { return symbolList; }
+            set { _symbolList = value; }
+            get { return _symbolList; }
         }
-        public String DIR
+        public string Dir
         {
-            set { dir = value; }
-            get { return dir; }
+            set { _dir = value; }
+            get { return _dir; }
         }
-        public String IPAddr
+        public string IpAddr
         {
-            set { ipaddr = value; }
-            get { return ipaddr; }
+            set { _ipaddr = value; }
+            get { return _ipaddr; }
         }
-        public String Port
+        public string Port
         {
-            set { port = value; }
-            get { return port; }
+            set { _port = value; }
+            get { return _port; }
         }
-        public Dictionary<int, string> _Cmd
+        public Dictionary<int, string> Cmd
         {
-            get { return ShortCmd; }
-            set { ShortCmd = value; }
+            get { return _shortCmd; }
+            set { _shortCmd = value; }
         }
         public static DS Instance
         {
@@ -49,24 +55,26 @@ namespace DataStructure
                 return _instance;
             }
         }
+        #endregion Properties
     }
 
     public class Command
     {
-        //public const string cmd_Start = "START";
-        public const string cmd_Start_Normal = "START0";
-        public const string cmd_Start_Fault = "START1";
-        public const string cmd_Stop = "STOP";
-        public const string cmd_Init = "INIT";
-        public const string IP = "IP";
-        public const string Port = "PORT";
-        public const string Dir = "DIR";
-        public const string cmd_1 = "1";
-        public const string cmd_2 = "2";
-        public const string cmd_3 = "3";
-        public const string cmd_4 = "4";
-        public const string cmd_5 = "5";
-        public const string cmd_tm_Normal = "TestMode[0]";
-        public const string cmd_tm_Fault = "TestMode[1]";
+        #region Constants
+        public const string CmdStartNormal = "START0";
+        public const string CmdStartFault  = "START1";
+        public const string CmdStop        = "STOP";
+        public const string CmdInit        = "INIT";
+        public const string IP             = "IP";
+        public const string Port           = "PORT";
+        public const string Dir            = "DIR";
+        public const string Cmd1           = "1";
+        public const string Cmd2           = "2";
+        public const string Cmd3           = "3";
+        public const string Cmd4           = "4";
+        public const string Cmd5           = "5";
+        public const string CmdTmNormal    = "TestMode[0]";
+        public const string CmdTmFault     = "TestMode[1]";
+        #endregion Constants
     }
 }

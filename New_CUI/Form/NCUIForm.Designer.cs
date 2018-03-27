@@ -15,8 +15,8 @@
         {
             DestroyHandle();
             if( button_STOP.Enabled)
-                client.SendMessage(DataStructure.Command.cmd_Stop);
-            client.exidDisconnet();
+                _client.SendMessage(DataStructure.Command.CmdStop);
+            _client.exidDisconnet();
             //System.Diagnostics.Process.GetCurrentProcess().Kill();
 
             if (disposing && (components != null))

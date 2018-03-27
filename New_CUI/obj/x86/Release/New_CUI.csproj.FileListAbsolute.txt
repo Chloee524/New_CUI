@@ -100,3 +100,9 @@ D:\0 Lab\0_Project\3 ZEUS\New_CUI_0321\New_CUI\obj\x86\Release\New_CUI.csproj.Ge
 D:\SVN\GIT\New_CUI\New_CUI\bin\Release\New_CUI.exe.config
 D:\SVN\GIT\New_CUI\New_CUI\obj\x86\Release\New_CUI.exe
 D:\SVN\GIT\New_CUI\New_CUI\obj\x86\Release\New_CUI.pdb
+D:\SVN\GIT\New_CUI\New_CUI\bin\Release\New_CUI.exe
+D:\SVN\GIT\New_CUI\New_CUI\bin\Release\New_CUI.pdb
+D:\SVN\GIT\New_CUI\New_CUI\obj\x86\Release\New_CUI.csprojResolveAssemblyReference.cache
+D:\SVN\GIT\New_CUI\New_CUI\obj\x86\Release\New_CUI.NCUIForm.resources
+D:\SVN\GIT\New_CUI\New_CUI\obj\x86\Release\New_CUI.Properties.Resources.resources
+D:\SVN\GIT\New_CUI\New_CUI\obj\x86\Release\New_CUI.csproj.GenerateResource.Cache
