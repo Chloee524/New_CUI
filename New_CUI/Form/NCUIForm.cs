@@ -72,48 +72,38 @@ namespace New_CUI
 
         private void InitConfig()
         {
-            ConfigRead cf = new ConfigRead();
-            cf.FilePath   = Directory.GetCurrentDirectory();
-            _configcheck  = cf.StartConfig();
+            Reader reader = new ConfigReader(new TextFile());
 
-            if (_configcheck == 0)
+            if (!reader.Read())
             {
-                ipAddressControl1.Text = _ds.IpAddr;
-                textBox_Port.Text = _ds.Port;
-                listBox_cmd.Items.Add("자주 사용하는 CMD");
-
-                foreach (var data in _ds.Cmd)
-                    listBox_cmd.Items.Add(data.Key + " " + data.Value);
-
-                Handler.LogMsg.AddNShow("[CUI] Config 파일을 성공적으로 읽었습니다.");
+                Handler.LogMsg.AddNShow("[CUI] [CONFIG 설정]" + reader.GetLastErrMsg());
+                return;
             }
-            else if (_configcheck == -1) 
-                Handler.LogMsg.AddNShow("[CUI] Config 경로가 제대로 설정되지 않았습니다.");
-            else if (_configcheck == -2) 
-                Handler.LogMsg.AddNShow("[CUI] Config 경로에 파일이 없습니다.");
-            else 
-                Handler.LogMsg.AddNShow("[CUI] Config Read 중 Error 발생");
+
+            ipAddressControl1.Text = _ds.IpAddr;
+            textBox_Port.Text = _ds.Port;
+            listBox_cmd.Items.Add("자주 사용하는 CMD");
+
+            foreach (var data in _ds.Cmd)
+                listBox_cmd.Items.Add(data.Key + " " + data.Value);
+
+            Handler.LogMsg.AddNShow("[CUI] [CONFIG 설정] 파일을 성공적으로 읽었습니다.");
         }
 
         private void InitSymbol()
         {
-            SymbolRead sr = new SymbolRead();
-            sr.FilePath   = Directory.GetCurrentDirectory();
-            _symbolcheck  = sr.StartSymbol();
+            Reader reader = new SymbolReader(new TextFile());
 
-            if (_symbolcheck == 0)
+            if (!reader.Read())
             {
-                foreach (var data in _ds.Symbol)
-                    listBox_Symbol.Items.Add(data);
-
-                Handler.LogMsg.AddNShow("[CUI] Symbol 파일을 성공적으로 읽었습니다.");
+                Handler.LogMsg.AddNShow("[CUI] [SYMBOL 설정]" + reader.GetLastErrMsg());
+                return;
             }
-            else if (_symbolcheck == -1) 
-                Handler.LogMsg.AddNShow("[CUI] Symbol 경로가 제대로 설정되지 않았습니다.");
-            else if (_symbolcheck == -2) 
-                Handler.LogMsg.AddNShow("[CUI] Symbol 경로에 파일이 없습니다.");
-            else 
-                Handler.LogMsg.AddNShow("[CUI] Symbol Read 중 Error 발생");
+
+            foreach (var data in _ds.Symbol)
+                listBox_Symbol.Items.Add(data);
+
+            Handler.LogMsg.AddNShow("[CUI] [SYMBOL 설정] 파일을 성공적으로 읽었습니다.");
         }
 
         private void InitGridView()

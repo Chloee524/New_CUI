@@ -51,10 +51,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataStructure\DS.cs" />
-    <Compile Include="FileManager\ConfigRead.cs" />
-    <Compile Include="FileManager\FileRead.cs" />
+    <Compile Include="FileManager\Reader\ConfigReader.cs" />
+    <Compile Include="FileManager\File\IFile.cs" />
+    <Compile Include="FileManager\File\TextFile.cs" />
     <Compile Include="FileManager\LogFileWrite.cs" />
-    <Compile Include="FileManager\SymbolRead.cs" />
+    <Compile Include="FileManager\Reader\Reader.cs" />
+    <Compile Include="FileManager\Reader\SymbolReader.cs" />
     <Compile Include="socket\ClientSocket.cs" />
     <Compile Include="Interface\IErrorLog.cs" />
     <Compile Include="Library\ErrorReport.cs" />
