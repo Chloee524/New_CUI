@@ -22,7 +22,6 @@ namespace New_CUI
         #region Private Member Variables
         private DataStructure.DS         _ds           = null;
         private int                      _configcheck  = -1;
-        private int                      _symbolcheck  = -1;
         private bool                     _logfileopen  = false;
         private string                   _ftpfileName  = @"WinSCP.exe";
         private string                   _logpath      = string.Empty;

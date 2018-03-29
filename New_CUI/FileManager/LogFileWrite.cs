@@ -14,14 +14,12 @@ namespace New_CUI.FileManager
         private bool             _isSuccess = false;
         private string           _filepath  = string.Empty;
         private string           _buffer;
-        private string           _margin;
         private StreamWriter     _sw        = null;
         private DataStructure.DS _ds        = null;
         #endregion Private Member Variables
 
         #region Constants
         private readonly Int32 Buffersize = 64000;
-        private readonly Int32 Marginsize = 100;
         #endregion Constants
 
         #region Properties
