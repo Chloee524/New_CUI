@@ -30,8 +30,6 @@ namespace New_CUI
         private ClientSocket             _client       = new ClientSocket();
         private StatusBarPanel           _pnlStatus    = new StatusBarPanel();
         private FileManager.LogFileWrite _logfile      = new FileManager.LogFileWrite();
-        
-        private static object            _syncRoot     = new object();
         #endregion Private Member Variables
 
         #region Constructor
@@ -244,26 +242,9 @@ namespace New_CUI
         #region Public Member Functions
         public void DispLog(string msg)
         {
-            lock (_syncRoot)
+            if (this.InvokeRequired)
             {
-                if (this.InvokeRequired)
-                {
-                    this.BeginInvoke(new MethodInvoker(delegate()
-                    {
-                        if (listBox_log.Items.Count >= 10 && listBox_log.Items[0] != null)
-                            listBox_log.Items.RemoveAt(0);
-
-                        if (_logfileopen) _logfile.WriteLogFile(msg);
-
-                        ///TEM에서 [CMD]START, [CMD]STOP을 보낼 시
-                        ///CUI에서 User가 START 또는 STOP을 누른 것 처럼 눌림.
-                        CheckCmdfromTEM(msg);
-                        listBox_log.TopIndex = listBox_log.Items.Add(msg);
-                    }
-                    ));
-
-                }
-                else
+                this.BeginInvoke(new MethodInvoker(delegate()
                 {
                     if (listBox_log.Items.Count >= 10 && listBox_log.Items[0] != null)
                         listBox_log.Items.RemoveAt(0);
@@ -275,7 +256,21 @@ namespace New_CUI
                     CheckCmdfromTEM(msg);
                     listBox_log.TopIndex = listBox_log.Items.Add(msg);
                 }
+                ));
+
             }
+            else
+            {
+                if (listBox_log.Items.Count >= 10 && listBox_log.Items[0] != null)
+                    listBox_log.Items.RemoveAt(0);
+
+                if (_logfileopen) _logfile.WriteLogFile(msg);
+
+                ///TEM에서 [CMD]START, [CMD]STOP을 보낼 시
+                ///CUI에서 User가 START 또는 STOP을 누른 것 처럼 눌림.
+                CheckCmdfromTEM(msg);
+                listBox_log.TopIndex = listBox_log.Items.Add(msg);
+            }   
         }
         #endregion Public Member Functions
 
